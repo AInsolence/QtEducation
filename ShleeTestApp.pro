@@ -26,10 +26,12 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-    controller.cpp
+    controller.cpp \
+    utilities.cpp
 
 HEADERS += \
-    controller.h
+    controller.h \
+    utilities.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

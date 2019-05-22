@@ -1,4 +1,5 @@
 #include <QtWidgets>
+#include "utilities.h"
 #include "controller.h"
 
 int main(int argc, char *argv[])
@@ -21,6 +22,11 @@ int main(int argc, char *argv[])
     QObject::connect(&CounterIncreaseButton,&QPushButton::clicked, MyController, &Controller::IncreaseNumber);
     QObject::connect(MyController, SIGNAL(NumberChanged(int)), &MyLable, SLOT(setNum(int)));
     QObject::connect(MyController, &Controller::StopCounting, &MyApplicationInstance, &QApplication::quit);
+
+    qDebug("Hello from program");
+    qInstallMessageHandler(Utilities::messageToFile);
+    qDebug("Hello from program");
+    qWarning("This is a warning msg!");
 
     return MyApplicationInstance.exec();
 }
