@@ -2,6 +2,8 @@
 #include <QtGlobal>
 #include <QFile>
 #include <QTextStream>
+#include <QTime>
+#include <QDate>
 
 Utilities::Utilities(QObject *parent) : QObject(parent)
 {
@@ -21,19 +23,24 @@ void Utilities::messageToFile(QtMsgType type, const QMessageLogContext &context,
 
     switch (type) {
         case QtInfoMsg:
-            msgText << "!!!Info: " << msg << context.file << endl;
+            msgText << "!!!Info: " << msg << context.file << " Date: " << QDate::currentDate().toString()
+                    << " Time: " << QTime::currentTime().toString() << endl;
             break;
         case QtWarningMsg:
-            msgText << "!!!Warning: " << msg << context.file << endl;
+            msgText << "!!!Warning: " << msg << context.file << " Date: " << QDate::currentDate().toString()
+                    << " Time: " << QTime::currentTime().toString() << endl;
             break;
         case QtDebugMsg:
-            msgText << "!!!Debug: " << msg << context.file << endl;
+            msgText << "!!!Debug: " << msg << context.file << " Date: " << QDate::currentDate().toString()
+                    << " Time: " << QTime::currentTime().toString() << endl;
             break;
         case QtCriticalMsg:
-            msgText << "!!!Critial: " << msg << context.file << endl;
+            msgText << "!!!Critial: " << msg << context.file << " Date: " << QDate::currentDate().toString()
+                    << " Time: " << QTime::currentTime().toString() << endl;
             break;
         case QtFatalMsg:
-            msgText << "!!!Fatal: " << msg << context.file << endl;
+            msgText << "!!!Fatal: " << msg << context.file << " Date: " << QDate::currentDate().toString()
+                    << " Time: " << QTime::currentTime().toString() << endl;
             abort();
     }
 }
