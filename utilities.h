@@ -11,6 +11,7 @@ public:
 
     //Debug helpers and utility functions
     static void messageToFile(QtMsgType type, const QMessageLogContext &context, const QString &msg);
+    static void dummyOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 
 signals:
 

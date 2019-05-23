@@ -44,3 +44,8 @@ void Utilities::messageToFile(QtMsgType type, const QMessageLogContext &context,
             abort();
     }
 }
+
+void Utilities::dummyOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+
+}
