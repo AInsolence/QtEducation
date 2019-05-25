@@ -8,14 +8,20 @@ int main(int argc, char *argv[])
     QApplication MyApplicationInstance(argc, argv);
 
     // Create label to show results from counter
-    QLabel MyLable("Start count, please!");
+    QLabel MyLable("Hello from my window", nullptr, Qt::WindowFlags(Qt::WindowStaysOnTopHint));
     MyLable.resize(400, 200);
     MyLable.setWindowTitle("Anton Super Application");
+    MyLable.setWindowFlag(Qt::WindowMinMaxButtonsHint);
     MyLable.show();
+    //Get position for button from lable pos
+    int ButtonXPos = MyLable.x() + MyLable.width();
     // Create increase button
     QPushButton CounterIncreaseButton("Counter ++");
-    CounterIncreaseButton.resize(200, 200);
-    CounterIncreaseButton.move(500, 500);
+    CounterIncreaseButton.setGeometry(ButtonXPos, MyLable.y(), 300, 100);
+    CounterIncreaseButton.setWindowFlag(Qt::FramelessWindowHint);
+    CounterIncreaseButton.setParent(nullptr);
+    CounterIncreaseButton.setEnabled(true);
+
     CounterIncreaseButton.show();
 
     Controller* MyController = new Controller();
