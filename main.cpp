@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     CounterIncreaseButton.setGeometry(ButtonXPos, MyLable.y(), 300, 100);
     CounterIncreaseButton.setWindowFlag(Qt::FramelessWindowHint);
     CounterIncreaseButton.setParent(nullptr);
-    CounterIncreaseButton.setEnabled(true);
+    //CounterIncreaseButton.setEnabled(true);
 
     CounterIncreaseButton.show();
 
@@ -56,6 +56,47 @@ int main(int argc, char *argv[])
     qDebug("Hello from program");
     qWarning("This is a warning msg!");
 
+    //Background settings examples
+    QWidget* MyWidget = new QWidget(nullptr, Qt::WindowFlags(Qt::Window));
+    MyWidget->setWindowTitle("MyWidget");
+    //Create inner widget with palette for background color
+    QWidget* InnerWidget_1 = new QWidget(MyWidget);
+    InnerWidget_1->setGeometry(25, 25, 100, 100);
+    QPalette* Palette_1 = new QPalette(); // create palette
+    Palette_1->setColor(InnerWidget_1->backgroundRole(), Qt::blue); // set color to the palette
+    InnerWidget_1->setPalette(*Palette_1); //
+    InnerWidget_1->setAutoFillBackground(true);
+    //Create second inner widget with texture as background
+    QWidget* InnerWidget_2 = new QWidget(MyWidget);
+    //QPalette* Palette_1 = new QPalette(); // create palette
+    QPixmap pix("C:/Users/Anton/QTProjects/ShleeTestApp/BlueTile.jpg");
+    Palette_1->setBrush(InnerWidget_2->backgroundRole(), QBrush(pix)); // set color to the palette
+    InnerWidget_2->setPalette(*Palette_1); //
+    InnerWidget_2->setAutoFillBackground(true);
+    //InnerWidget_2->setFixedSize(pix.width(), pix.height());
+    InnerWidget_2->resize(500, 500);
+
+    MyWidget->show();
+
+    //Cursor settings examples
+    //QGuiApplication::setOverrideCursor(Qt::OpenHandCursor);
+    //QGuiApplication::restoreOverrideCursor();
+    CounterIncreaseButton.setCursor(Qt::PointingHandCursor);
+
+    //QFrame examples
+    QFrame* frame = new QFrame(MyWidget);
+    frame->setFrameStyle(QFrame::Box | QFrame::Raised);
+    frame->setGeometry(0, 0, 300, 300);
+    frame->setLineWidth(10);
+    frame->setMidLineWidth(3);
+    frame->setContentsMargins(10,10,10,10);
+    frame->show();
+
+    //QScrollArea
+    QScrollArea scrollArea(MyWidget);
+    scrollArea.setWidget(InnerWidget_2);
+    scrollArea.setGeometry(100,100,200,200);
+    scrollArea.show();
 
     return MyApplicationInstance.exec();
 }
