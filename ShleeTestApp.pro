@@ -25,12 +25,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    layoutcustomwidget.cpp \
         main.cpp \
     controller.cpp \
     utilities.cpp
 
 HEADERS += \
     controller.h \
+    layoutcustomwidget.h \
     utilities.h
 
 # Default rules for deployment.

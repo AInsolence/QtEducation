@@ -2,6 +2,7 @@
 #include <QString>
 #include "utilities.h"
 #include "controller.h"
+#include "layoutcustomwidget.h"
 
 int main(int argc, char *argv[])
 {
@@ -97,6 +98,12 @@ int main(int argc, char *argv[])
     scrollArea.setWidget(InnerWidget_2);
     scrollArea.setGeometry(100,100,200,200);
     scrollArea.show();
+
+    //Layout examples
+    LayoutCustomWidget* MyLayout = new LayoutCustomWidget(nullptr);
+    MyLayout->setLayout(MyLayout->layout);
+    MyLayout->move(100, 200);
+    MyLayout->show();
 
     return MyApplicationInstance.exec();
 }
