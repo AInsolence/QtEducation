@@ -105,6 +105,7 @@ void Calculator::slotButtonClicked()
         if(operationStack.count() >= 2){// if stack contain number && operator
             operationStack.push(QString::number(lcdDisplay->value()));
             calculate();
+            operationStack.push(QString::number(lcdDisplay->value()));
             if(userInput != "="){
                 operationStack.push(userInput);
             }
