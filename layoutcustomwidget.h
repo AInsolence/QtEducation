@@ -17,8 +17,7 @@ signals:
 public slots:
 
 private:
-
-    QVector<QPushButton*> buttons;
+    QVector<QBoxLayout*> rows;
 };
 
 #endif // LAYOUTCUSTOMWIDGET_H
