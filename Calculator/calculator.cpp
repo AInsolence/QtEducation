@@ -3,11 +3,17 @@
 Calculator::Calculator(QWidget *parent)
     : QWidget(parent)
 {
+    // style sheet & icon
+    setWindowOpacity(qreal(92)/100);
+    setStyleSheet("QWidget {border: 2px solid gray; border-radius: 10px;}");
+    setWindowIcon(QIcon(QPixmap("C:/Users/Anton/QTProjects/ShleeTestApp/Calculator/calculator.png")));
+    setWindowTitle("Calculator");
+    // lcdDiaplay initialization
     constexpr uint displaySize = 12;
     lcdDisplay = new QLCDNumber(displaySize);
     lcdDisplay->setSegmentStyle(QLCDNumber::Flat);
-    lcdDisplay->setMinimumSize(160, 50);
-
+    lcdDisplay->setMinimumSize(320, 100);
+    // buttons map
     constexpr int buttonRows = 4;
     constexpr int buttonColumns = 4;
     QChar calcButtons [buttonRows][buttonColumns] = {
@@ -39,8 +45,12 @@ Calculator::~Calculator()
 QPushButton *Calculator::createButton(const QString &buttonName)
 {
     QPushButton* button = new QPushButton(buttonName);
-    button->setMinimumSize(40, 40);
+    button->setMinimumSize(80, 80);
     button->setCursor(QCursor(Qt::PointingHandCursor));
+
+    QFont font = button->font();
+    font.setPointSize(16);
+    button->setFont(font);
 
     connect(button, &QPushButton::clicked, this, &Calculator::slotButtonClicked);
 
@@ -92,7 +102,7 @@ void Calculator::slotButtonClicked()
         lcdDisplay->display(strToDisplay);
     }
     else{
-        if(operationStack.count() >= 2){// if stack contain number + operator
+        if(operationStack.count() >= 2){// if stack contain number && operator
             operationStack.push(QString::number(lcdDisplay->value()));
             calculate();
             if(userInput != "="){
