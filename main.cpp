@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
     //Layout examples
     LayoutCustomWidget* MyLayout = new LayoutCustomWidget(nullptr);
     MyLayout->setLayout(MyLayout->layout);
-    MyLayout->move(100, 200);
+    //MyLayout->move(100, 200);
     MyLayout->show();
 
     return MyApplicationInstance.exec();
