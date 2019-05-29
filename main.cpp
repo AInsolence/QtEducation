@@ -105,5 +105,14 @@ int main(int argc, char *argv[])
     //MyLayout->move(100, 200);
     MyLayout->show();
 
+    // QSplitter example
+    QSplitter* spl = new QSplitter(Qt::Vertical, MyWidget);
+    spl->move(300, 300);
+    QTextEdit* txtArea_1 = new QTextEdit("text editor one", spl);
+    QTextEdit* txtArea_2 = new QTextEdit("text editor two", spl);
+
+    txtArea_1->setPlainText(txtArea_1->toPlainText() + "\ntext lorem ipsum for editor one");
+    txtArea_2->setPlainText(txtArea_1->toPlainText() + "\ntext lorem ipsum for editor two");
+    spl->show();
     return MyApplicationInstance.exec();
 }
