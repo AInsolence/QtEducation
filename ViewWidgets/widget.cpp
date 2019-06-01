@@ -13,10 +13,15 @@ Widget::Widget(QWidget *parent)
     lineEditArea_2->setRange(0, LONG_MAX);
     label2->setBuddy(lineEditArea_2);
 
+    QVBoxLayout* wrapperLayoutLevel_2 = new QVBoxLayout();
+    wrapperLayoutLevel_2->setMargin(10);
+    wrapperLayoutLevel_2->setSpacing(50);
+    setLayout(wrapperLayoutLevel_2);
+
     QHBoxLayout* wrapperLayoutLevel_1 = new QHBoxLayout();
+    wrapperLayoutLevel_2->addLayout(wrapperLayoutLevel_1);
     wrapperLayoutLevel_1->setMargin(10);
-    wrapperLayoutLevel_1->setSpacing(50);
-    setLayout(wrapperLayoutLevel_1);
+    wrapperLayoutLevel_1->setSpacing(30);
 
     QVBoxLayout* labelExamplelayout = new QVBoxLayout();
     wrapperLayoutLevel_1->addLayout(labelExamplelayout);
@@ -111,6 +116,47 @@ Widget::Widget(QWidget *parent)
     QPushButton* exit = new QPushButton("Exit");
     radioBox->layout()->addWidget(exit);
     connect(exit, &QPushButton::clicked, &QApplication::quit);
+
+    //Slider examples
+    QHBoxLayout* wrapperLayoutLevel_1_2 = new QHBoxLayout();
+    wrapperLayoutLevel_2->addLayout(wrapperLayoutLevel_1_2);
+    wrapperLayoutLevel_1_2->setMargin(10);
+    wrapperLayoutLevel_1_2->setSpacing(50);
+    wrapperLayoutLevel_1_2->setAlignment(Qt::AlignLeft);
+    //QSlider
+    QSlider* slider = new QSlider(Qt::Horizontal);
+    slider->setRange(0,30);
+    slider->setMinimumSize(QSize(50, 10));
+    slider->setSingleStep(2);// arrow buttons pressed interval
+    slider->setValue(3);// init default value
+    slider->setTickPosition(QSlider::TicksBelow);
+    slider->setTickInterval(3);// ticks paint interval
+    slider->setPageStep(10);// PgUp-PgDown pressed interval
+    wrapperLayoutLevel_1_2->addWidget(slider);
+
+    QLabel* slideLable = new QLabel("3");
+    slideLable->setMinimumSize(QSize(20, 20));
+    wrapperLayoutLevel_1_2->addWidget(slideLable);
+    connect(slider, &QSlider::valueChanged, slideLable, qOverload<int>(&QLabel::setNum));
+
+    //QScrollBar
+    QScrollBar* scroll = new QScrollBar();
+    wrapperLayoutLevel_1_2->addWidget(scroll);
+    scroll->setOrientation(Qt::Horizontal);
+    scroll->setRange(0, 100);
+    //scroll->setSingleStep(2);
+    //scroll->setPageStep(5);
+    scroll->setMinimumSize(QSize(250, 5));
+    connect(scroll, &QScrollBar::valueChanged, lineEditArea_2, &QSpinBox::setValue);
+
+    //QDial
+    QDial* dial = new QDial();
+    dial->setNotchTarget(2);// ticks paint interval
+    dial->setNotchesVisible(true);
+    dial->setRange(0, 100);
+    dial->setWrapping(true);// make loop form min to max, false by default
+    wrapperLayoutLevel_1_2->addWidget(dial);
+    connect(dial, &QDial::valueChanged, progressBar, &QProgressBar::setValue);
 
     show();
 }
