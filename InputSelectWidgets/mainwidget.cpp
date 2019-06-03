@@ -86,9 +86,24 @@ MainWidget::MainWidget(QWidget *parent)
     connect(this, &MainWidget::setRangeInSignal, textEditArea, &QTextEdit::zoomIn);
     connect(this, &MainWidget::setRangeOutSignal, textEditArea, &QTextEdit::zoomOut);
 
+    if(textEditArea->toPlainText().contains("header")){
+        textEditArea->append("\"Header finded!\"");
+    };
+
     inputLayout->addWidget(header_2);
     inputLayout->addWidget(textEditArea);
     inputLayout->addWidget(boxForSlider);
+
+    //QTextDocumentWriter example
+    QTextDocumentWriter* writer = new QTextDocumentWriter("document.html");
+    //writer->setFormat("html");
+    //writer->setFileName("document.html");
+
+    QPushButton* save = new QPushButton("Save");
+    inputLayout->addWidget(save);
+    // try to create signal called lambda function
+    //writer->write(textEditArea->document());
+    connect(save, &QPushButton::clicked, [=](){writer->write(textEditArea->document());});
 
     setLayout(layout);
     show();
