@@ -1,5 +1,7 @@
 #include "mainwidget.h"
 #include <QtWidgets>
+#include <QtPrintSupport/QPrinter>
+#include <myhighlighter.h>
 
 MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent)
@@ -104,6 +106,47 @@ MainWidget::MainWidget(QWidget *parent)
     // try to create signal called lambda function
     //writer->write(textEditArea->document());
     connect(save, &QPushButton::clicked, [=](){writer->write(textEditArea->document());});
+
+    //QPrinter save as pdf file
+    QPrinter* printer = new QPrinter(QPrinter::PrinterMode::HighResolution);
+    printer->setOutputFormat(QPrinter::PdfFormat);
+    printer->setOutputFileName("documentFromPrinter.pdf");
+    connect(save, &QPushButton::clicked, [=](){textEditArea->document()->print(printer);});
+
+    //QSyntaxHighlighter example
+    QVBoxLayout* highlighterLayout = new QVBoxLayout();
+    layout->addLayout(highlighterLayout);
+
+    QTextEdit* editorC = new QTextEdit();
+    editorC->setMinimumSize(400, 400);
+    highlighterLayout->addWidget(editorC);
+    //init font
+    QFont* editorFont = new QFont("Times", 20, QFont::Thin);
+    editorC->setFont(*editorFont);
+    //create buttons to set font attributes
+    QGroupBox* fontSettings = new QGroupBox("Font settings:");
+    QHBoxLayout* fontGroupBox = new QHBoxLayout();
+    fontSettings->setLayout(fontGroupBox);
+    highlighterLayout->addWidget(fontSettings);
+
+    QRadioButton* thinFontButton = new QRadioButton("Thin");
+    thinFontButton->setChecked(true);
+    QRadioButton* boldFontButton = new QRadioButton("Bold");
+    QCheckBox* italicFontButton = new QCheckBox("Italic");
+    fontGroupBox->addWidget(thinFontButton);
+    fontGroupBox->addWidget(boldFontButton);
+    fontGroupBox->addWidget(italicFontButton);
+    //connect buttons
+    connect(thinFontButton, &QRadioButton::clicked, [=](){editorC->setFontWeight(QFont::Thin);});
+    connect(boldFontButton, &QRadioButton::clicked, [=](){editorC->setFontWeight(QFont::Bold);});
+    connect(italicFontButton, &QCheckBox::toggled, editorC, &QTextEdit::setFontItalic);
+    //set standart background and text color in pallet and apply it to editor
+    QPalette* editorPalette = new QPalette();
+    editorPalette->setColor(QPalette::Base, Qt::darkGray);
+    editorPalette->setColor(QPalette::Text, Qt::darkBlue);
+    editorC->setPalette(*editorPalette);
+    //create highlighter and attach it to editor
+    MyHighlighter* highlighter = new MyHighlighter(editorC->document());
 
     setLayout(layout);
     show();
