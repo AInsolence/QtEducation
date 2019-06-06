@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/data">
+        <file>keyWords.txt</file>
+        <file>keySymbols.txt</file>
+    </qresource>
+</RCC>

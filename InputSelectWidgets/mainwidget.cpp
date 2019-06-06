@@ -142,8 +142,8 @@ MainWidget::MainWidget(QWidget *parent)
     connect(italicFontButton, &QCheckBox::toggled, editorC, &QTextEdit::setFontItalic);
     //set standart background and text color in pallet and apply it to editor
     QPalette* editorPalette = new QPalette();
-    editorPalette->setColor(QPalette::Base, Qt::darkGray);
-    editorPalette->setColor(QPalette::Text, Qt::darkBlue);
+    editorPalette->setColor(QPalette::Base, Qt::gray);
+    editorPalette->setColor(QPalette::Text, Qt::blue);
     editorC->setPalette(*editorPalette);
     //create highlighter and attach it to editor
     MyHighlighter* highlighter = new MyHighlighter(editorC->document());
