@@ -11,6 +11,10 @@ Widget::Widget(QWidget *parent)
     label->setBuddy(lineEditArea);
     QSpinBox* lineEditArea_2 = new QSpinBox(this);
     lineEditArea_2->setRange(0, LONG_MAX);
+    lineEditArea_2->setPrefix("Num: ");
+    lineEditArea_2->setSuffix(" (DEC)");
+    lineEditArea_2->setMinimumHeight(30);
+    lineEditArea_2->setButtonSymbols(QSpinBox::PlusMinus);// do not work on win10(why??)
     label2->setBuddy(lineEditArea_2);
 
     QVBoxLayout* wrapperLayoutLevel_2 = new QVBoxLayout();

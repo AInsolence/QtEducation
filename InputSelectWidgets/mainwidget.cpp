@@ -148,6 +148,10 @@ MainWidget::MainWidget(QWidget *parent)
     //create highlighter and attach it to editor
     MyHighlighter* highlighter = new MyHighlighter(editorC->document());
 
+    //QDateTimeedit example
+    QDateTimeEdit* dateTimeArea = new QDateTimeEdit(QDateTime::currentDateTime());
+    highlighterLayout->addWidget(dateTimeArea);
+
     setLayout(layout);
     show();
 }

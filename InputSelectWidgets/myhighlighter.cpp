@@ -23,9 +23,6 @@ MyHighlighter::MyHighlighter(QTextDocument* parent):
     QString symbolsContent = keySymbolsFile.readAll();
     // extract symbols
     keySymbolsList = symbolsContent.split(QRegExp("[\r\n]"),QString::SkipEmptyParts);
-    for (auto word : keySymbolsList){
-        qDebug() << word;
-    }
 
     keyWordsFile.close();
     keySymbolsFile.close();
@@ -66,7 +63,6 @@ QString MyHighlighter::isStringKeyWord(int ipos, const QString &str)
 QString MyHighlighter::isStringKeySymbol(int ipos, const QString &str)
 {
     for(QString symbol : keySymbolsList){
-        qDebug() << symbol;
         if(str.mid(ipos, symbol.length()) == symbol){
             return symbol;
         }
