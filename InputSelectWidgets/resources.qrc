@@ -3,4 +3,10 @@
         <file>keyWords.txt</file>
         <file>keySymbols.txt</file>
     </qresource>
+    <qresource prefix="/images">
+        <file>Android.png</file>
+        <file>MacOS.png</file>
+        <file>Linux.png</file>
+        <file>Windows.png</file>
+    </qresource>
 </RCC>

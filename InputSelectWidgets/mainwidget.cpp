@@ -148,9 +148,57 @@ MainWidget::MainWidget(QWidget *parent)
     //create highlighter and attach it to editor
     MyHighlighter* highlighter = new MyHighlighter(editorC->document());
 
-    //QDateTimeedit example
+    //QDateTimeEdit example
     QDateTimeEdit* dateTimeArea = new QDateTimeEdit(QDateTime::currentDateTime());
     highlighterLayout->addWidget(dateTimeArea);
+
+    /**************** Selection widgets **********************/
+    QVBoxLayout* selectionLayout = new QVBoxLayout();
+    layout->addLayout(selectionLayout);
+
+    //QListWidget
+    QListWidget* osList = new QListWidget();
+    selectionLayout->addWidget(osList);
+    osList->setIconSize(QSize(40, 40));
+
+    QStringList osStrList;
+    osStrList << "Windows" << "MacOS" << "Linux" << "Android";
+
+    for(QString os : osStrList){
+        QListWidgetItem* item = new QListWidgetItem(os, osList);
+        item->setIcon(QPixmap(":/images/" + os + ".png"));
+    }
+    // sort AFTER all elements in list
+    osList->sortItems(Qt::AscendingOrder);
+    osList->setSelectionMode(QAbstractItemView::MultiSelection);// set selection MODE
+
+    connect(osList,&QListWidget::clicked, [=] () {//take pointer by value cause by ref ->> runtime error
+        for(auto msg : osList->selectedItems()){// get list of selected items
+            editorC->append(msg->text());
+        }
+        qDebug() << osList->currentItem()->text();// get ONE selected item
+    });
+    connect(osList, &QListWidget::itemClicked, [=](QListWidgetItem* item){
+        qDebug() << item->text() << " item clicked";
+    });
+    connect(osList, &QListWidget::itemDoubleClicked, [=](QListWidgetItem* item){
+        qDebug() << item->text() << " item double clicked";
+        item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsSelectable
+                       | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+    });
+
+    //Pictogram mode
+    osList->setViewMode(QListView::IconMode);
+    //Set view flow
+    osList->setFlow(QListView::TopToBottom);
+    // clone() method example
+    QListWidget* osList_2 = new QListWidget();
+    selectionLayout->addWidget(osList_2);
+    osList_2->setIconSize(QSize(40, 40));
+
+    osList_2->addItem(osList->item(0)->clone());//clone from first list
+
+    //QTreeWidget example
 
     setLayout(layout);
     show();
