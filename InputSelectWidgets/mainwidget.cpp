@@ -199,6 +199,70 @@ MainWidget::MainWidget(QWidget *parent)
     osList_2->addItem(osList->item(0)->clone());//clone from first list
 
     //QTreeWidget example
+    QTreeWidget* treeWidget = new QTreeWidget();
+    selectionLayout->addWidget(treeWidget);
+    // !!!NOTE: Selection mode work only for NON-Checkable items
+    treeWidget->setSelectionMode(QAbstractItemView::MultiSelection);
+    // create columns labels
+    QStringList headerLabelsDiscC;
+    headerLabelsDiscC << "Name" << "Change date" << "Type" << "Memory size";
+    treeWidget->setHeaderLabels(headerLabelsDiscC);
+    treeWidget->setSortingEnabled(true);// enable sorting by click on column lable
+    // sort tree items included nested items
+    treeWidget->sortItems(0, Qt::AscendingOrder);
+
+    // Create item for QTreeWidget
+    QTreeWidgetItem* tItem_1 = new QTreeWidgetItem(treeWidget);
+    tItem_1->setFlags(tItem_1->flags() | Qt::ItemIsTristate);
+    //tItem_1->setCheckState(0, Qt::PartiallyChecked);// automatically set flag Qt::ItemIsUserCheckable
+    tItem_1->setText(0, "Local disc C:");
+    tItem_1->setText(1, QDate::currentDate().toString());
+    tItem_1->setText(2, "folder");
+    tItem_1->setText(3, "10 Mb");
+
+    for(int i = 10; i > 0; --i){
+        QTreeWidgetItem* item = new QTreeWidgetItem(tItem_1);
+        item->setCheckState(0,  Qt::Unchecked);// automatically set flag Qt::ItemIsUserCheckable
+        item->setText(0, "Disc " + QString::number(i));
+        item->setText(1, QTime::currentTime().toString());
+        item->setText(2, "file");
+        item->setText(3, QString::number(i) + " Mb");
+        //drag&drop enable
+        item->setFlags(item->flags() | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | Qt::ItemIsTristate);
+    }
+
+    // sort by conditions. !!!NOTE: doesnt work if isSortingEnabled == true, or tree is sorted with sortItems()
+    tItem_1->sortChildren(0, Qt::DescendingOrder);
+    // expand all elements in the tree or tree item
+    tItem_1->setExpanded(true);
+
+    // Create second item for QTreeWidget
+    QTreeWidgetItem* tItem_2 = new QTreeWidgetItem(treeWidget);
+    tItem_2->setFlags(tItem_2->flags() | Qt::ItemIsTristate);
+    //tItem_2->setCheckState(0, Qt::PartiallyChecked);// automatically set flag Qt::ItemIsUserCheckable
+    tItem_2->setText(0, "Local disc D:");
+    tItem_2->setText(1, QDate::currentDate().toString());
+    tItem_2->setText(2, "folder");
+    tItem_2->setText(3, "20 Mb");
+
+
+    for(int i = 10; i > 0; --i){
+        QTreeWidgetItem* item = new QTreeWidgetItem(tItem_2);
+        item->setCheckState(0,  Qt::Unchecked);// automatically set flag Qt::ItemIsUserCheckable
+        item->setText(0, "Disc " + QString::number(i));
+        item->setText(1, QTime::currentTime().toString());
+        item->setText(2, "file");
+        item->setText(3, QString::number(i) + " Mb");
+        //drag&drop enable
+        item->setFlags(item->flags() | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | Qt::ItemIsTristate);
+    }
+
+    // tree widget traversal
+    QTreeWidgetItemIterator treeIterator(treeWidget, QTreeWidgetItemIterator::All);
+    while(*(++treeIterator)){
+        qDebug() << (*treeIterator)->text(0);
+    }
+
 
     setLayout(layout);
     show();
