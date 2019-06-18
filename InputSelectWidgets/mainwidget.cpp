@@ -263,6 +263,26 @@ MainWidget::MainWidget(QWidget *parent)
         qDebug() << (*treeIterator)->text(0);
     }
 
+    //QTableWidget example
+    QTableWidget* tableWidget = new QTableWidget(3, 5);
+    selectionLayout->addWidget(tableWidget);
+
+    QStringList rowNames;
+    QStringList colNames;
+
+    rowNames << "1" << "2" << "3";// automatically set number as name if we dont set other
+    colNames << "A" << "B" << "C" << "D" << "E";
+
+    tableWidget->setHorizontalHeaderLabels(colNames);
+    tableWidget->setVerticalHeaderLabels(rowNames);
+
+    for (int row = 0; row < 3; ++row){
+        for (int col = 0; col < 5; ++col) {
+            QTableWidgetItem* cell = new QTableWidgetItem(QString("%1,%2").arg(row).arg(col));
+            tableWidget->setItem(row, col, cell);
+        }
+    }
+
 
     setLayout(layout);
     show();
