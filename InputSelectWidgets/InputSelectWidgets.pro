@@ -25,11 +25,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        mailvalidator.cpp \
         main.cpp \
         mainwidget.cpp \
         myhighlighter.cpp
 
 HEADERS += \
+        mailvalidator.h \
         mainwidget.h \
         myhighlighter.h
 

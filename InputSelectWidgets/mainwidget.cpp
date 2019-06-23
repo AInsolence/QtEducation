@@ -2,6 +2,7 @@
 #include <QtWidgets>
 #include <QtPrintSupport/QPrinter>
 #include <myhighlighter.h>
+#include <mailvalidator.h>
 
 MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent)
@@ -19,23 +20,37 @@ MainWidget::MainWidget(QWidget *parent)
     header->setLineWidth(3);
     header->setMargin(5);
 
-    QLabel* nameFieldLabel = new QLabel("&Name:");
-    QLineEdit* userName = new QLineEdit("Anton");
-    nameFieldLabel->setBuddy(userName);
+    QLabel* mailFieldLable = new QLabel("&Phone:");
+    QLineEdit* userPhone = new QLineEdit("+7(");
+    QLineEdit* date = new QLineEdit("2008-10-15");
+    mailFieldLable->setBuddy(userPhone);
     QLabel* passFieldLabel = new QLabel("&Password:");
     QLineEdit* password = new QLineEdit("ItWasHereBeforeYouStartEdit");
     password->setEchoMode(QLineEdit::Password);
     password->setMaxLength(30);// set max length of string in line
     passFieldLabel->setBuddy(password);
 
+    // QValidator example
+    MailValidator* myValidator = new MailValidator(this);
+    QIntValidator* intVal = new QIntValidator(this);
+    QRegExpValidator* mailVal = new QRegExpValidator(QRegExp("(^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@+[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$)"));
+    QRegExpValidator* phoneVal = new QRegExpValidator(QRegExp("\\+7\\([0-9]{3}\\)[0-9]{0,7}"));
+    userPhone->setValidator(myValidator);
+    // set INPUT MASK
+    date->setInputMask("9999-99-99  \\!to\\d\\ay\\!");
+
     inputLayout->addWidget(header);
-    inputLayout->addWidget(nameFieldLabel);
-    inputLayout->addWidget(userName);
+    inputLayout->addWidget(date);
+    inputLayout->addWidget(mailFieldLable);
+    inputLayout->addWidget(userPhone);
+    QPushButton* checkEmailButton = new QPushButton("Check email");
+    inputLayout->addWidget(checkEmailButton);
+
     inputLayout->addWidget(passFieldLabel);
     inputLayout->addWidget(password);
 
     connect(password, &QLineEdit::textEdited, header, &QLabel::setText);
-    //connect(userName, &QLineEdit::returnPressed, userName, &QLineEdit::setDisabled);
+    //connect(userPhone, &QLineEdit::returnPressed, userPhone, &QLineEdit::setDisabled);
 
     //QTextEdit example
     QLabel* header_2 = new QLabel("Text editor example");
@@ -282,7 +297,6 @@ MainWidget::MainWidget(QWidget *parent)
             tableWidget->setItem(row, col, cell);
         }
     }
-
 
     setLayout(layout);
     show();
