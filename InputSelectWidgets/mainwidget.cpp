@@ -35,7 +35,7 @@ MainWidget::MainWidget(QWidget *parent)
     QIntValidator* intVal = new QIntValidator(this);
     QRegExpValidator* mailVal = new QRegExpValidator(QRegExp("(^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@+[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$)"));
     QRegExpValidator* phoneVal = new QRegExpValidator(QRegExp("\\+7\\([0-9]{3}\\)[0-9]{0,7}"));
-    userPhone->setValidator(myValidator);
+    userPhone->setValidator(phoneVal);
     // set INPUT MASK
     date->setInputMask("9999-99-99  \\!to\\d\\ay\\!");
 
@@ -298,6 +298,29 @@ MainWidget::MainWidget(QWidget *parent)
         }
     }
 
+    QVBoxLayout* misLayout = new QVBoxLayout();
+    layout->addLayout(misLayout);
+
+    //QComboBox example
+    QComboBox* comboWidget = new QComboBox();
+    misLayout->addWidget(comboWidget);
+
+    QStringList comboVariants;
+    comboVariants << "One" << "Two" << "Three" << "Four";
+    comboWidget->addItems(comboVariants);
+    comboWidget->setDuplicatesEnabled(false);
+
+    //QTabWidget example
+    QTabWidget* tabWidget = new QTabWidget();
+    misLayout->addWidget(tabWidget);
+
+    for(QString os : osStrList){
+        tabWidget->addTab(new QLabel(os, tabWidget), QPixmap(":/images/" + os + ".png"), os);
+    }
+
+    connect(comboWidget, qOverload<int>(&QComboBox::activated), tabWidget, &QTabWidget::setCurrentIndex);
+    connect(tabWidget, &QTabWidget::currentChanged, comboWidget, &QComboBox::setCurrentIndex);
+    this->setMinimumWidth(1700);
     setLayout(layout);
     show();
 }
