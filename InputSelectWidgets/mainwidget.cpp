@@ -320,6 +320,18 @@ MainWidget::MainWidget(QWidget *parent)
 
     connect(comboWidget, qOverload<int>(&QComboBox::activated), tabWidget, &QTabWidget::setCurrentIndex);
     connect(tabWidget, &QTabWidget::currentChanged, comboWidget, &QComboBox::setCurrentIndex);
+
+    //QToolBox
+    QToolBox* toolWidget = new QToolBox();
+    misLayout->addWidget(toolWidget);
+    for(QString os : osStrList){
+        toolWidget->addItem(new QLabel(os, tabWidget), QPixmap(":/images/" + os + ".png"), os);
+    }
+
+    connect(tabWidget, &QTabWidget::currentChanged, toolWidget, &QToolBox::setCurrentIndex);
+    connect(toolWidget, &QToolBox::currentChanged, comboWidget, &QComboBox::setCurrentIndex);
+    connect(toolWidget, &QToolBox::currentChanged, tabWidget, &QTabWidget::setCurrentIndex);
+
     this->setMinimumWidth(1700);
     setLayout(layout);
     show();
