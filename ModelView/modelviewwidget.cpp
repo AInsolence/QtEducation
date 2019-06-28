@@ -60,6 +60,7 @@ ModelViewWidget::ModelViewWidget(QWidget *parent)
             for(int col = 0; col < 3; ++col){
                 QString data = QString("%1, %2").arg(row).arg(col);
                 stModel->setData(stModel->index(row, col, index), data);
+                //qDebug() << index.data();
             }
         }
     }
@@ -67,10 +68,38 @@ ModelViewWidget::ModelViewWidget(QWidget *parent)
     QTreeView* stModelView = new QTreeView();
     stModelView->setModel(stModel);
 
+    //********************* QFileSystemModel *************************//
+    QHBoxLayout* explorerLayout = new QHBoxLayout();
+    QFileSystemModel* fileSysModel = new QFileSystemModel();
+    fileSysModel->setRootPath(QDir::rootPath());
+
+    QTreeView* fileSysModelView = new QTreeView();
+    fileSysModelView->setModel(fileSysModel);
+    // show only current directory
+    /*QModelIndex currDirIndex = fileSysModel->index(QDir::currentPath());
+    fileSysModelView->setRootIndex(currDirIndex);*/
+
+    // create directory table view
+    QTableView* dirSysModelView = new QTableView();
+    dirSysModelView->setModel(fileSysModel);
+
+    explorerLayout->addWidget(fileSysModelView);
+    explorerLayout->addWidget(dirSysModelView);
+    // show current directory in table after clicking on tree item
+    connect(fileSysModelView, &QTreeView::clicked,
+            dirSysModelView, &QTableView::setRootIndex);
+    // tree view reacting on changes in table view
+    connect(dirSysModelView, &QTableView::activated,
+            fileSysModelView, &QTreeView::setCurrentIndex);
+    // open folder in table view
+    connect(dirSysModelView, &QTableView::activated,
+            dirSysModelView, &QTableView::setRootIndex);
+
     // main layout
     QVBoxLayout* mainLayout = new QVBoxLayout();
     mainLayout->addLayout(mvLayout);
     mainLayout->addWidget(stModelView);
+    mainLayout->addLayout(explorerLayout);
 
     setLayout(mainLayout);
     show();
