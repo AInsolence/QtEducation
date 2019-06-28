@@ -25,10 +25,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        customdelegate.cpp \
         main.cpp \
         modelviewwidget.cpp
 
 HEADERS += \
+        customdelegate.h \
         modelviewwidget.h
 
 # Default rules for deployment.

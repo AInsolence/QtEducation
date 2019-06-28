@@ -5,6 +5,7 @@
 #include <QTreeView>
 #include <QTableView>
 #include <QDebug>
+#include "customdelegate.h"
 
 ModelViewWidget::ModelViewWidget(QWidget *parent)
     : QWidget(parent)
@@ -33,6 +34,14 @@ ModelViewWidget::ModelViewWidget(QWidget *parent)
     listView->setSelectionModel(selectionModel);
     treeView->setSelectionModel(selectionModel);
     tableView->setSelectionModel(selectionModel);
+
+    // set custom style delegate
+    listView->setItemDelegate(new CustomDelegate(listView));
+    listView->viewport()->setAttribute(Qt::WA_Hover);
+    treeView->setItemDelegate(new CustomDelegate(treeView));
+    treeView->viewport()->setAttribute(Qt::WA_Hover);
+    tableView->setItemDelegate(new CustomDelegate(tableView));
+    tableView->viewport()->setAttribute(Qt::WA_Hover);
 
     // add all views to layout
     QHBoxLayout* mainLayout = new QHBoxLayout();
