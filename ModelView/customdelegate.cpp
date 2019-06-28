@@ -20,5 +20,6 @@ void CustomDelegate::paint(QPainter *painter,
         painter->setBrush(gradient);
         painter->drawRect(rect);
     }
+    // call paint with new custom parameters
     QStyledItemDelegate::paint(painter, styleOption, index);
 }

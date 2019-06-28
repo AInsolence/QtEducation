@@ -12,9 +12,6 @@ ModelViewWidget::ModelViewWidget(QWidget *parent)
 {// create data
     QStringList myList;
     myList << "item 1" << "item 2" << "item 3" << "item 4";
-    for(QString name : myList){
-        qDebug() << name;
-    }
     //create model
     QStringListModel* myListModel = new QStringListModel();
     myListModel->setStringList(myList);
@@ -43,11 +40,37 @@ ModelViewWidget::ModelViewWidget(QWidget *parent)
     tableView->setItemDelegate(new CustomDelegate(tableView));
     tableView->viewport()->setAttribute(Qt::WA_Hover);
 
+
     // add all views to layout
-    QHBoxLayout* mainLayout = new QHBoxLayout();
-    mainLayout->addWidget(listView);
-    mainLayout->addWidget(treeView);
-    mainLayout->addWidget(tableView);
+    QHBoxLayout* mvLayout = new QHBoxLayout();
+    mvLayout->addWidget(listView);
+    mvLayout->addWidget(treeView);
+    mvLayout->addWidget(tableView);
+
+    //********************* QStandardItemModel *************************//
+    QStandardItemModel* stModel = new QStandardItemModel(5, 3);
+    for (int topRow = 0; topRow < 5; ++topRow) {
+        QModelIndex index = stModel->index(topRow, 0);
+        stModel->setData(index, "item " + QString::number(topRow + 1));
+
+        // expand our model
+        stModel->insertRows(0, 4, index);
+        stModel->insertColumns(0, 3, index);
+        for(int row = 0; row < 4; ++row){
+            for(int col = 0; col < 3; ++col){
+                QString data = QString("%1, %2").arg(row).arg(col);
+                stModel->setData(stModel->index(row, col, index), data);
+            }
+        }
+    }
+
+    QTreeView* stModelView = new QTreeView();
+    stModelView->setModel(stModel);
+
+    // main layout
+    QVBoxLayout* mainLayout = new QVBoxLayout();
+    mainLayout->addLayout(mvLayout);
+    mainLayout->addWidget(stModelView);
 
     setLayout(mainLayout);
     show();
