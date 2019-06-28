@@ -59,7 +59,12 @@ ModelViewWidget::ModelViewWidget(QWidget *parent)
         for(int row = 0; row < 4; ++row){
             for(int col = 0; col < 3; ++col){
                 QString data = QString("%1, %2").arg(row).arg(col);
-                stModel->setData(stModel->index(row, col, index), data);
+                // roles example
+                stModel->setData(stModel->index(row, col, index), data, Qt::DisplayRole);
+                stModel->setData(stModel->index(row, col, index), "ToolTip for " + data, Qt::ToolTipRole);
+                stModel->setData(stModel->index(row, col, index), "Status for " + data, Qt::StatusTipRole);
+                QBrush brush(QColor(row*60, col*85, 255));
+                stModel->setData(stModel->index(row, col, index), brush, Qt::BackgroundRole);
                 //qDebug() << index.data();
             }
         }
