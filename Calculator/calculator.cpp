@@ -12,7 +12,7 @@ Calculator::Calculator(QWidget *parent)
     constexpr uint displaySize = 12;
     lcdDisplay = new QLCDNumber(displaySize);
     lcdDisplay->setSegmentStyle(QLCDNumber::Flat);
-    lcdDisplay->setMinimumSize(320, 100);
+    lcdDisplay->setMinimumSize(QSize(150, 50));
     // buttons map
     constexpr int buttonRows = 4;
     constexpr int buttonColumns = 4;
@@ -45,7 +45,7 @@ Calculator::~Calculator()
 QPushButton *Calculator::createButton(const QString &buttonName)
 {
     QPushButton* button = new QPushButton(buttonName);
-    button->setMinimumSize(80, 80);
+    button->setMinimumSize(50, 50);
     button->setCursor(QCursor(Qt::PointingHandCursor));
 
     QFont font = button->font();

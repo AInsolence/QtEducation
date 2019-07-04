@@ -27,11 +27,13 @@ CONFIG += c++11
 SOURCES += \
         customdelegate.cpp \
         main.cpp \
-        modelviewwidget.cpp
+        modelviewwidget.cpp \
+        qintlistmodel.cpp
 
 HEADERS += \
         customdelegate.h \
-        modelviewwidget.h
+        modelviewwidget.h \
+        qintlistmodel.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
