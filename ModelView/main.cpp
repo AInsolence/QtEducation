@@ -39,5 +39,9 @@ int main(int argc, char *argv[])
                      sortedDataModel, &QSortFilterProxyModel::setFilterWildcard);
 
     proxyModelExample->show();
+    QPalette palette(Qt::green, Qt::magenta);
+    palette.setColor(QPalette::Inactive, QPalette::Base, Qt::lightGray);
+    palette.setColor(QPalette::Text, Qt::blue);
+    QApplication::setPalette(palette);
     return a.exec();
 }
