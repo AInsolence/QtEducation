@@ -38,10 +38,11 @@ int main(int argc, char *argv[])
     QObject::connect(maskInputField, &QLineEdit::textEdited,
                      sortedDataModel, &QSortFilterProxyModel::setFilterWildcard);
 
-    proxyModelExample->show();
+    //proxyModelExample->show();
     QPalette palette(Qt::green, Qt::magenta);
     palette.setColor(QPalette::Inactive, QPalette::Base, Qt::lightGray);
     palette.setColor(QPalette::Text, Qt::blue);
     QApplication::setPalette(palette);
+
     return a.exec();
 }

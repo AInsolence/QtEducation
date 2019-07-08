@@ -107,10 +107,29 @@ ModelViewWidget::ModelViewWidget(QWidget *parent)
     mainLayout->addLayout(explorerLayout);
 
     setLayout(mainLayout);
+    this->setFocusPolicy ( Qt::StrongFocus );
     show();
 }
 
 ModelViewWidget::~ModelViewWidget()
 {
 
+}
+
+void ModelViewWidget::keyPressEvent(QKeyEvent *myEvent)
+{
+    switch (myEvent->key()) {
+    case Qt::Key_Plus:
+        if(myEvent->modifiers() & Qt::ShiftModifier){
+            resize(width()+50, height()+50);
+        }
+        break;
+    case Qt::Key_Minus:
+        if(myEvent->modifiers() & Qt::ShiftModifier){
+            resize(width()-50, height()-50);
+        }
+        break;
+    default:
+        QWidget::keyPressEvent(myEvent);
+    }
 }

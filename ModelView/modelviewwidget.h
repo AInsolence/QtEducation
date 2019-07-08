@@ -8,8 +8,10 @@ class ModelViewWidget : public QWidget
     Q_OBJECT
 
 public:
-    ModelViewWidget(QWidget *parent = 0);
+    ModelViewWidget(QWidget *parent = nullptr);
     ~ModelViewWidget();
+protected:
+    virtual void keyPressEvent(QKeyEvent* myEvent) override;
 };
 
 #endif // MODELVIEWWIDGET_H
