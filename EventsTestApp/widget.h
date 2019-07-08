@@ -21,6 +21,9 @@ protected:
     virtual void enterEvent(QEvent* myEvent) override;
     virtual void leaveEvent(QEvent* myEvent) override;
 
+    virtual void resizeEvent(QResizeEvent* myEvent) override;
+    virtual void moveEvent(QMoveEvent* myEvent) override;
+
     void dumpEvent(QMouseEvent* myEvent, const QString msg);
     QString modifiersInfo(QMouseEvent* myEvent);
     QString buttonsInfo(QMouseEvent* myEvent);

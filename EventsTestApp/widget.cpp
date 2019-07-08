@@ -63,6 +63,30 @@ void Widget::leaveEvent(QEvent *myEvent)
     setText("Mouse leave widget");
 }
 
+void Widget::resizeEvent(QResizeEvent *myEvent)
+{
+    setText(
+                "Window resized\nOld size: "
+                + QString::number(myEvent->oldSize().width())
+                + " " + QString::number(myEvent->oldSize().height())
+                + "\nNew size: "
+                + QString::number(myEvent->size().width())
+                + " " + QString::number(myEvent->size().height())
+                );
+}
+
+void Widget::moveEvent(QMoveEvent *myEvent)
+{
+    setText(
+                "Window moved\nOld position: "
+                + QString::number(myEvent->oldPos().x())
+                + " " + QString::number(myEvent->oldPos().y())
+                + "\nNew position: "
+                + QString::number(myEvent->pos().x())
+                + " " + QString::number(myEvent->pos().y())
+                );
+}
+
 void Widget::dumpEvent(QMouseEvent *myEvent, const QString msg)
 {
     setText(msg
