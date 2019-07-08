@@ -17,6 +17,8 @@ protected:
     virtual void mouseReleaseEvent(QMouseEvent* myEvent) override;
     virtual void mouseMoveEvent(QMouseEvent* myEvent) override;
 
+    virtual void wheelEvent(QWheelEvent* myEvent) override;
+
     void dumpEvent(QMouseEvent* myEvent, const QString msg);
     QString modifiersInfo(QMouseEvent* myEvent);
     QString buttonsInfo(QMouseEvent* myEvent);

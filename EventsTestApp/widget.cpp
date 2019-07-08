@@ -47,6 +47,12 @@ void Widget::mouseMoveEvent(QMouseEvent *myEvent)
     dumpEvent(myEvent, "Mouse moved");
 }
 
+void Widget::wheelEvent(QWheelEvent *myEvent)
+{
+    setText(text() + "\nWheel rotate"
+            + "delta = " + QString::number(myEvent->delta()));
+}
+
 void Widget::dumpEvent(QMouseEvent *myEvent, const QString msg)
 {
     setText(msg
