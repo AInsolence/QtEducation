@@ -53,6 +53,16 @@ void Widget::wheelEvent(QWheelEvent *myEvent)
             + "delta = " + QString::number(myEvent->delta()));
 }
 
+void Widget::enterEvent(QEvent *myEvent)
+{
+    setText("Mouse on widget");
+}
+
+void Widget::leaveEvent(QEvent *myEvent)
+{
+    setText("Mouse leave widget");
+}
+
 void Widget::dumpEvent(QMouseEvent *myEvent, const QString msg)
 {
     setText(msg
