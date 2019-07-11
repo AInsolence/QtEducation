@@ -25,11 +25,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        keysubstitutefilter.cpp \
         main.cpp \
         mouseeventfilter.cpp \
         widget.cpp
 
 HEADERS += \
+        keysubstitutefilter.h \
         mouseeventfilter.h \
         widget.h
 
