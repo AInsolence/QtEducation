@@ -13,8 +13,8 @@ bool mouseEventFilter::eventFilter(QObject* eventOwner, QEvent* myButtonEvent)
         if(dynamic_cast<QMouseEvent*>(myButtonEvent)->button() == Qt::LeftButton){
             QString widgetName = eventOwner->metaObject()->className();
             QMessageBox::information(nullptr, "Event owner class name", widgetName);
-            return true;
+            return true;// do not transmit event forward
         }
     }
-    return false;
+    return false;// transmit event forward
 }
