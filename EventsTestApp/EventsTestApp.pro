@@ -26,9 +26,11 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
+        mouseeventfilter.cpp \
         widget.cpp
 
 HEADERS += \
+        mouseeventfilter.h \
         widget.h
 
 # Default rules for deployment.
