@@ -1,6 +1,8 @@
 #include "canvas_1.h"
 #include <QtMath>
 #include <QVector>
+#include <QPicture>
+#include <QDebug>
 
 Canvas_1::Canvas_1(QWidget *parent)
     : QWidget(parent)
@@ -69,5 +71,24 @@ void Canvas_1::paintEvent(QPaintEvent *)
                          90*16, 90*16);// connect two angles on ellips
     painter_1->drawPie(600, 50, 200, 200,
                        30*16, 330*16);// pie between two angles
+
+    // Saving and loading QPainter commands in QPicture .dat file
+    QPicture picture;
+
+    if(!picture.save("picture.dat")){
+        qDebug() << "cannot save picture.dat file";
+    }
+
+    if(!picture.load("newPicture.dat")){
+        qDebug() << "cannot load picture.dat file";
+    }
+
+    // transformations:
+    painter_1->scale(0.8, 0.5);
+    painter_1->shear(0.5, 0.5);
+    painter_1->translate(-130.0, 300.0);
+    painter_1->rotate(10);
+    painter_1->drawEllipse(200, 200, 200, 300);
+    painter_1->end();
 
 }
