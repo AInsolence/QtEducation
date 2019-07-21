@@ -84,11 +84,22 @@ void Canvas_1::paintEvent(QPaintEvent *)
     }
 
     // transformations:
+    painter_1->save();
     painter_1->scale(0.8, 0.5);
     painter_1->shear(0.5, 0.5);
     painter_1->translate(-130.0, 300.0);
     painter_1->rotate(10);
     painter_1->drawEllipse(200, 200, 200, 300);
+    painter_1->restore();
+
+    QTransform matrix;
+
+    //matrix.scale(0.7, 0.5);
+    matrix.shear(0.2, 0.5);
+    matrix.rotate(15);
+    painter_1->setTransform(matrix);
+    painter_1->drawText(rect(), Qt::AlignCenter, "Transformed text");
+
     painter_1->end();
 
 }
