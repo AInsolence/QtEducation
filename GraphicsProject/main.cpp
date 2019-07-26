@@ -13,29 +13,30 @@ QLabel* lblCreate(const QPainter::CompositionMode& mode){
     QPainter painter;
     // create first image
     QImage sourceImage(rect.size(), QImage::Format_ARGB32_Premultiplied);
-    sourceImage.fill(Qt::transparent);
+    sourceImage.fill(Qt::transparent);// make empty transparent img
     painter.begin(&sourceImage);
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setBrush(QColor(0, 255, 0));
-    painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
-    // draw triangle
+    //painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+    // draw triangle on sourceImage
     painter.drawPolygon(QPolygon() << rect.bottomLeft()
                                    << QPoint(rect.center().x(), 0)
                                    << rect.bottomRight());
     painter.end();
     // create second image
     QImage resultImage(rect.size(), QImage::Format_ARGB32_Premultiplied);
-    resultImage.fill(Qt::transparent);
+    resultImage.fill(Qt::transparent);// make empty transparent img
     painter.begin(&resultImage);
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setPen(QPen(QColor(0, 255, 0), 4));
     painter.setBrush(QColor(255, 0, 0));
-    // draw circle
+    // draw circle on resultImage
     painter.drawEllipse(rect);
     painter.setCompositionMode(mode);
+    // draw sourseImage on resultImage with setted composition mode
     painter.drawImage(rect, sourceImage);
     painter.end();
-
+    // set resultImage in Label
     lbl->setPixmap(QPixmap::fromImage(resultImage));
     return lbl;
 }
