@@ -79,9 +79,9 @@ void Canvas_1::paintEvent(QPaintEvent *)
         qDebug() << "cannot save picture.dat file";
     }
 
-    if(!picture.load("newPicture.dat")){
+    /*if(!picture.load("newPicture.dat")){
         qDebug() << "cannot load picture.dat file";
-    }
+    }*/ //DOESNT work???
 
     // transformations:
     painter_1->save();
@@ -101,5 +101,4 @@ void Canvas_1::paintEvent(QPaintEvent *)
     painter_1->drawText(rect(), Qt::AlignCenter, "Transformed text");
 
     painter_1->end();
-
 }

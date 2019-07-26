@@ -25,11 +25,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        canvas_2.cpp \
+        canvas_3.cpp \
         main.cpp \
         canvas_1.cpp
 
 HEADERS += \
-        canvas_1.h
+        canvas_1.h \
+        canvas_2.h \
+        canvas_3.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
