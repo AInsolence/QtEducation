@@ -3,7 +3,9 @@
 #include "canvas_3.h"
 #include <QApplication>
 #include <QLayout>
+#include <QFormLayout>
 #include <QLabel>
+#include <QGraphicsEffect>
 
 QLabel* lblCreate(const QPainter::CompositionMode& mode){
     QLabel* lbl = new QLabel;
@@ -38,6 +40,20 @@ QLabel* lblCreate(const QPainter::CompositionMode& mode){
     painter.end();
     // set resultImage in Label
     lbl->setPixmap(QPixmap::fromImage(resultImage));
+    return lbl;
+}
+
+QLabel* lblWithEffect(QGraphicsEffect* effect){
+    QLabel* lbl = new QLabel();
+    QPixmap tank(":/image/panzer640.png");
+    QPixmap scaledTank = tank.scaled(200, 150, Qt::KeepAspectRatio);
+    //NOTE that .scaled() is const and does not change source object!!!
+    lbl->setPixmap(scaledTank);
+    if(effect){
+        lbl->setGraphicsEffect(effect);
+    }
+    //lbl->setScaledContents(true);
+
     return lbl;
 }
 
@@ -89,7 +105,22 @@ int main(int argc, char *argv[])
     innerLayout_2->addWidget(lblCreate(QPainter::CompositionMode_Xor), 2, 5);
     innerLayout_2->addWidget(new QLabel("<CENTER>XOR</CENTER>"), 3, 5);
 
+    // GraphicsEffect examples
+    // effects list
+    QGraphicsEffect* blurEffect = new QGraphicsBlurEffect();
+    QGraphicsEffect* colorizeEffect = new QGraphicsColorizeEffect();
+    QGraphicsEffect* opacityEffect = new QGraphicsOpacityEffect();
+    QGraphicsEffect* dropShadowEffect = new QGraphicsDropShadowEffect;
+    // create form and fill it with effects labels
+    QFormLayout* effectsLayout = new QFormLayout();
+    effectsLayout->addRow("No effect", lblWithEffect(nullptr));
+    effectsLayout->addRow("Blur effect", lblWithEffect(blurEffect));
+    effectsLayout->addRow("Colorize effect", lblWithEffect(colorizeEffect));
+    effectsLayout->addRow("Opacity effect", lblWithEffect(opacityEffect));
+    effectsLayout->addRow("Drop Shadow effect", lblWithEffect(dropShadowEffect));
+
     mainLayout->addLayout(innerLayout_2);
+    innerLayout_1->addLayout(effectsLayout);
     mainWidget.show();
 
     return a.exec();
