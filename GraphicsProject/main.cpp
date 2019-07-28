@@ -123,5 +123,11 @@ int main(int argc, char *argv[])
     innerLayout_1->addLayout(effectsLayout);
     mainWidget.show();
 
+    // paint widget
+    Canvas_3 paintWgt;
+    paintWgt.setMinimumSize(500, 500);
+
+    paintWgt.show();
+
     return a.exec();
 }
