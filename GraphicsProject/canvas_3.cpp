@@ -7,14 +7,17 @@
 
 Canvas_3::Canvas_3(QWidget *parent) : QWidget(parent)
 {
-    canvas = new QImage(500, 500, QImage::Format_ARGB32_Premultiplied);
+    canvas = new QPixmap(size());
     canvas->fill(Qt::gray);
-    lbl = new QLabel();
-    lbl->setPixmap(QPixmap::fromImage(*canvas));
+}
 
-    QFormLayout* layout = new QFormLayout();
-    layout->addRow(lbl);
-    this->setLayout(layout);
+void Canvas_3::paintEvent(QPaintEvent *pe)
+{
+    QPainter painter;
+
+    painter.begin(this);
+    painter.drawPixmap(rect(), *canvas);
+    painter.end();
 }
 
 /*void Canvas_3::paintEvent(QPaintEvent *pe)
@@ -38,5 +41,6 @@ void Canvas_3::mouseMoveEvent(QMouseEvent *myEvent)
         //painter.drawRect(myEvent->x(), myEvent->y(), 20, 20);
         painter.drawPoint(myEvent->x(), myEvent->y());
         painter.end();
-        lbl->setPixmap(QPixmap::fromImage(*canvas));
+
+        update();
 }

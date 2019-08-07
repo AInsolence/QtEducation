@@ -10,11 +10,11 @@ class Canvas_3 : public QWidget
 public:
     explicit Canvas_3(QWidget *parent = nullptr);
 
-    QImage* canvas = nullptr;
+    QPixmap* canvas = nullptr;
     QLabel* lbl = nullptr;
 
 protected:
-    //void paintEvent(QPaintEvent* pe) override;
+    void paintEvent(QPaintEvent* pe) override;
 
     virtual void mouseMoveEvent(QMouseEvent* myEvent) override;
 };
