@@ -20,16 +20,6 @@ void Canvas_3::paintEvent(QPaintEvent *pe)
     painter.end();
 }
 
-/*void Canvas_3::paintEvent(QPaintEvent *pe)
-{
-    QPainter painter_3;
-    painter_3.setPen(QPen(Qt::red));
-    painter_3.setRenderHint(QPainter::Antialiasing, true);
-
-
-    painter_3.end();
-}*/
-
 void Canvas_3::mouseMoveEvent(QMouseEvent *myEvent)
 {
         qDebug() << "Moved left button " << myEvent->x() << " " << myEvent->y();
