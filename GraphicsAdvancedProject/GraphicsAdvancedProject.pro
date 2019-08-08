@@ -25,12 +25,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        customwidget.cpp \
         main.cpp \
         widget.cpp \
         widget_2.cpp \
         widget_3.cpp
 
 HEADERS += \
+        customwidget.h \
         widget.h \
         widget_2.h \
         widget_3.h
