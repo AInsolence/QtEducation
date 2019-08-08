@@ -28,7 +28,10 @@ void widget_2::paintEvent(QPaintEvent *)
     painter.begin(&img);
     painter.setPen(QPen(gradient, 0));
     painter.setFont(QFont("Times", 40, QFont::Bold));
-    painter.drawText(30, 70, "SAMPLE TEXT");
+    QString str = "This is a very long gradient text to sample";
+    QString elidedText =
+            fontMetrics().elidedText(str, Qt::ElideMiddle, img.width());
+    painter.drawText(img.rect(), elidedText);
     painter.end();
     //
     painter.begin(this);
