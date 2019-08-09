@@ -36,5 +36,4 @@ void widget_2::paintEvent(QPaintEvent *)
     //
     painter.begin(this);
     painter.drawImage(0, 0, img);
-
 }

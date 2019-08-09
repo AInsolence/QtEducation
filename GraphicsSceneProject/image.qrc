@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/tank">
+        <file>Hull_01.png</file>
+        <file>Track_3_A.png</file>
+        <file>Turret.png</file>
+        <file>Gun_04_A.png</file>
+    </qresource>
+</RCC>
