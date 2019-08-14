@@ -26,9 +26,11 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
+        simpleitem.cpp \
         widget.cpp
 
 HEADERS += \
+        simpleitem.h \
         widget.h
 
 # Default rules for deployment.

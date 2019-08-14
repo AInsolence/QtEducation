@@ -1,15 +1,20 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
-#include <QWidget>
+#include <QGraphicsView>
 
-class Widget : public QWidget
+class Widget : public QGraphicsView
 {
     Q_OBJECT
 
 public:
-    Widget(QWidget *parent = 0);
+    Widget(QGraphicsScene* pScene, QWidget *parent = nullptr);
     ~Widget();
+public slots:
+    void slotZoomIn();
+    void slotZoomOut();
+    void slotRotateLeft();
+    void slotRotateRight();
 };
 
 #endif // WIDGET_H
