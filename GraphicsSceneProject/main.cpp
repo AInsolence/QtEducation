@@ -6,6 +6,10 @@
 #include <QPushButton>
 #include "simpleitem.h"
 #include <QLayout>
+#include <QMovie>
+#include <QDebug>
+#include <QLabel>
+#include <QTimer>
 
 int main(int argc, char *argv[])
 {
@@ -134,6 +138,23 @@ int main(int argc, char *argv[])
     layout->addWidget(rotateLeft);
     layout->addWidget(rotateRight);
 
+    qDebug() << QMovie::supportedFormats();
+    // QMovie example
+    QMovie* explosionMovie = new QMovie(":/tank/tenor.gif");
+    QLabel movieLabel;
+    movieLabel.resize(640, 480);
+    explosionMovie->setScaledSize(movieLabel.size());
+    movieLabel.setMovie(explosionMovie);
+    explosionMovie->start();
+    explosionMovie->setSpeed(60);// set 60% of real speed
+    // QTimer example
+    QTimer timer(&movieLabel);
+    QObject::connect(&timer, &QTimer::timeout, [&](){
+        explosionMovie->stop();
+    });
+    timer.start(3020);
+
     mainWidget.show();
+    movieLabel.show();
     return a.exec();
 }
