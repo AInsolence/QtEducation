@@ -10,6 +10,9 @@
 #include <QDebug>
 #include <QLabel>
 #include <QTimer>
+#include <QTime>
+#include <QGraphicsColorizeEffect>
+#include <QPropertyAnimation>
 
 int main(int argc, char *argv[])
 {
@@ -64,14 +67,17 @@ int main(int argc, char *argv[])
     QPushButton buttonRight("Turn Turret Right");
     QPushButton buttonTurnLeft("Turn Left");
     QPushButton buttonTurnRight("Turn Right");
+    QPushButton buttonFire("Fire");
     scene.addWidget(&buttonLeft);
     scene.addWidget(&buttonRight);
     scene.addWidget(&buttonTurnLeft);
     scene.addWidget(&buttonTurnRight);
+    scene.addWidget(&buttonFire);
     buttonLeft.move(0, 400);
     buttonRight.move(165, 400);
     buttonTurnLeft.move(0, 440);
     buttonTurnRight.move(165, 440);
+    buttonFire.move(80, 480);
 
     turret->setTransformOriginPoint(turret->boundingRect().width()/2,
                                     turret->boundingRect().height()/2);
@@ -96,6 +102,23 @@ int main(int argc, char *argv[])
                             transform.rotate(30);
                             transform.translate( -centerX , -centerY );
                             hull->setTransform(transform);
+                          });
+    // custom animation
+    QObject::connect(&buttonFire, &QPushButton::pressed,
+                     [&](){
+                            qint8 moveIndex= 10;
+                            for (int moveInd = 0;moveInd < moveIndex; moveInd++) {
+                                barrel->moveBy(0, 1);
+                                QTime dieTime= QTime::currentTime().addMSecs(20);
+                                while (QTime::currentTime() < dieTime)
+                                QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+                            }
+                            for (int moveInd = 0;moveInd < moveIndex; moveInd++) {
+                                barrel->moveBy(0, -1);
+                                QTime dieTime= QTime::currentTime().addMSecs(20);
+                                while (QTime::currentTime() < dieTime)
+                                QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+                            }
                           });
 
     graphicsView.show();
@@ -153,6 +176,37 @@ int main(int argc, char *argv[])
         explosionMovie->stop();
     });
     timer.start(3020);
+
+    // QPropertyAnimation
+    QLabel animLabel;
+    layout->addWidget(&animLabel);
+    animLabel.setPixmap(QPixmap(":/tank/Turret.png"));
+
+    QGraphicsColorizeEffect animEffect;
+    animLabel.setGraphicsEffect(&animEffect);
+
+    QPropertyAnimation* animation = new QPropertyAnimation(&animEffect, "color");
+
+    animation->setStartValue(QColor(Qt::white));
+    animation->setKeyValueAt(0.25, QColor(Qt::red));
+    animation->setKeyValueAt(0.5, QColor(Qt::blue));
+    animation->setKeyValueAt(0.75, QColor(Qt::green));
+    animation->setEndValue(QColor(Qt::yellow));
+
+    animation->setDuration(3000);
+    animation->setLoopCount(-1);
+    animation->start(QAbstractAnimation::DeleteWhenStopped);
+
+    QPushButton button("Animation");
+    layout->addWidget(&button);
+    QPropertyAnimation *mAnimation = new QPropertyAnimation(&button, "geometry");
+    mAnimation->setDuration(10000);
+    mAnimation->setStartValue(QRect(0, 0, 100, 30));
+    mAnimation->setKeyValueAt(0.5, QRect(250, 250, 100, 30));
+    mAnimation->setEndValue(QRect(0, 0, 100, 30));
+    mAnimation->setLoopCount(-1);
+
+    mAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 
     mainWidget.show();
     movieLabel.show();

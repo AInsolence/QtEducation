@@ -1,4 +1,5 @@
 #include "widget.h"
+#include <QLabel>
 
 Widget::Widget(QGraphicsScene* pScene, QWidget *parent)
     : QGraphicsView(pScene, parent)
