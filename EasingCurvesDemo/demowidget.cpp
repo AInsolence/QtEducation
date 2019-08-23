@@ -2,6 +2,7 @@
 #include "QEasingCurve"
 #include "QPropertyAnimation"
 #include "QDebug"
+#include "pullbutton.h"
 
 DemoWidget::DemoWidget(QWidget *parent)
     : QWidget(parent)
@@ -129,6 +130,9 @@ DemoWidget::DemoWidget(QWidget *parent)
     connect(OutCurve, &QPushButton::clicked, [=](){animation->setEasingCurve(QEasingCurve::OutCurve); animation->start();});
     connect(SineCurve, &QPushButton::clicked, [=](){animation->setEasingCurve(QEasingCurve::SineCurve); animation->start();});
     connect(CosineCurve, &QPushButton::clicked, [=](){animation->setEasingCurve(QEasingCurve::CosineCurve); animation->start();});
+
+    PullButton* pullButton = new PullButton();
+    layout->addWidget(pullButton);
 };
 
 
