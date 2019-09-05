@@ -26,10 +26,14 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        oglquad.cpp
+        oglpyramide.cpp \
+        oglquad.cpp \
+        oglquad_2.cpp
 
 HEADERS += \
-        oglquad.h
+        oglpyramide.h \
+        oglquad.h \
+        oglquad_2.h
 
 LIBS += opengl32.lib
 
