@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     wgt_2.show();
 
     OGLPyramide pyramide;
-    pyramide.resize(300, 300);
+    pyramide.resize(500, 500);
     pyramide.show();
 
     return a.exec();

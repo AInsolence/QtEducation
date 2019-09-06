@@ -20,9 +20,9 @@ void OGLPyramide::initializeGL()
     displayListNumber = createPyramide(1.2f);
 }
 
-void OGLPyramide::resizeGL(int width, int height)
+void OGLPyramide::resizeGL(int nWidth, int nHeight)
 {
-    glViewport(0, 0, static_cast<GLuint>(width), static_cast<GLuint>(height));
+    glViewport(0, 0, static_cast<GLuint>(nWidth), static_cast<GLuint>(nHeight));
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glFrustum(-1.0, 1.0, -1.0, 1.0, 1.0, 10.0);// multiply current matrix by perspective matrix
@@ -47,26 +47,33 @@ void OGLPyramide::mousePressEvent(QMouseEvent *me)
 
 void OGLPyramide::mouseMoveEvent(QMouseEvent *me)
 {
-    xRotateAngle += 180 * static_cast<GLfloat>(me->y() - mouseCursorPosition.y());
-    yRotateAngle += 180 * static_cast<GLfloat>(me->x() - mouseCursorPosition.x());
+    xRotateAngle += 180 * static_cast<GLfloat>(me->y() - mouseCursorPosition.y())/height();
+    yRotateAngle += 180 * static_cast<GLfloat>(me->x() - mouseCursorPosition.x())/width();
     updateGL();
     mouseCursorPosition = me->pos();
 }
 
-GLuint OGLPyramide::createPyramide(GLfloat pyramideSize)
+GLuint OGLPyramide::createPyramide(GLfloat pyramideSize/*=1.0f*/)
 {
-    GLuint glListNumber = glGenLists(1);
-    glNewList(glListNumber, GL_COMPILE);
+    GLuint listNumber = glGenLists(1);
+    glNewList(listNumber, GL_COMPILE);
 
         glBegin(GL_TRIANGLE_FAN);
+
             qglColor(Qt::green);
             glVertex3f(0.0, pyramideSize, 0.0);
             glVertex3f(-pyramideSize, -pyramideSize, pyramideSize);
             glVertex3f(pyramideSize, -pyramideSize, pyramideSize);
+
             qglColor(Qt::yellow);
             glVertex3f(pyramideSize, -pyramideSize, -pyramideSize);
+
+            qglColor(Qt::blue);
+            glVertex3f(-pyramideSize, -pyramideSize, -pyramideSize);
+
             qglColor(Qt::white);
             glVertex3f(-pyramideSize, -pyramideSize, pyramideSize);
+
         glEnd();
 
         glBegin(GL_QUADS);
@@ -79,5 +86,5 @@ GLuint OGLPyramide::createPyramide(GLfloat pyramideSize)
 
     glEndList();
 
-    return glListNumber;
+    return listNumber;
 }
