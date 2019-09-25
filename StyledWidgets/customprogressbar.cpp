@@ -28,7 +28,7 @@ void CustomProgressBar::paintEvent(QPaintEvent *)
     QString info = QString::number(_progressInPercentage) + "Kb/s";
     painter.drawText(rect(), Qt::AlignCenter, info);
 
-    drawFrame(&painter);
+    QFrame::drawFrame(&painter);// draw the wgt's frame
 }
 
 QSize CustomProgressBar::sizeHint() const
