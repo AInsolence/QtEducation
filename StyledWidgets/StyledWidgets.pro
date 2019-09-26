@@ -19,12 +19,14 @@ SOURCES += \
     customline.cpp \
     customprogressbar.cpp \
     main.cpp \
-    widget.cpp
+    widget.cpp \
+    widgetwithstyles.cpp
 
 HEADERS += \
     DemoWidget.h \
     customline.h \
-    customprogressbar.h
+    customprogressbar.h \
+    widgetwithstyles.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
