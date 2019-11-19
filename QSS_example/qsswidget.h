@@ -8,8 +8,10 @@ class QSSWidget : public QWidget
     Q_OBJECT
 
 public:
-    QSSWidget(QWidget *parent = 0);
+    QSSWidget(QWidget *parent = nullptr);
     ~QSSWidget();
+protected:
+    virtual void paintEvent(QPaintEvent *event) override;
 };
 
 #endif // QSSWIDGET_H

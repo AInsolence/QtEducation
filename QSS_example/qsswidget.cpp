@@ -37,3 +37,8 @@ QSSWidget::~QSSWidget()
 {
 
 }
+
+void QSSWidget::paintEvent(QPaintEvent *event)
+{
+
+}
