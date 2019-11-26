@@ -8,6 +8,7 @@ class QPushButton;
 class QToolButton;
 class QLabel;
 class QSlider;
+class QVideoWidget;
 
 class playerWidget : public QWidget
 {
@@ -17,24 +18,39 @@ public:
     playerWidget(QWidget *parent = nullptr);
     ~playerWidget();
 
+protected:
+    void mouseMoveEvent(QMouseEvent* event);
+    void mousePressEvent(QMouseEvent* event);
+    void mouseReleaseEvent(QMouseEvent* event);
+    void mouseDoubleClickEvent(QMouseEvent *event);
+
 private:
     QMediaPlayer* mediaPlayer = nullptr;
+    // top line
+    QWidget* titlebarWidget = nullptr;
+    QLabel* playerWindowTitle = nullptr;
+    // screen
+    QVideoWidget* videoScreen = nullptr;
     // player controls
     QPushButton* playButton = nullptr;
     QPushButton* pauseButton = nullptr;
     QPushButton* stopButton = nullptr;
     QToolButton* openFileButton = nullptr;
+    QToolButton* fullScreenButton = nullptr;
     QSlider* volumeSlider = nullptr;
     // info items
     QSlider* durationSlider = nullptr;
-    QPushButton* currentTime = nullptr;
+    QToolButton* currentTime = nullptr;
     QLabel* fileNameLabel = nullptr;
-    //
+    // helper variables
+    QPoint lastMousePosition;
+    bool bIsMovingAvailable = false;
     QString msecToTimeString(qint64);
     void setDurationTime(qint64);
     bool bIsCurrentTime = true;
 
 private slots:
+    void slotMaximized();
     void slotOpen();
     void slotPlay();
     void slotPause();
@@ -44,5 +60,7 @@ private slots:
     void slotSetVolume(qint64);
     void slotSetDuration(qint64);
     void slotChangeDurationInfo();
+    void slotIsVideoAvailable();
+    void slotToFullScreen();
 };
 #endif // PLAYERWIDGET_H
