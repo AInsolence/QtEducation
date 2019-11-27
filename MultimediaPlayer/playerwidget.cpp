@@ -54,9 +54,11 @@ playerWidget::playerWidget(QWidget *parent)
     pauseButton = new QPushButton(" || ");
     stopButton = new QPushButton("&stop");
     openFileButton = new QToolButton();
-    openFileButton->setText("^");
+    openFileButton->setText(" ^ ");
+    openFileButton->setMinimumWidth(40);
     fullScreenButton = new QToolButton();
     fullScreenButton->setText("<->");
+    fullScreenButton->setMinimumWidth(40);
 
     playButton->setEnabled(false);
     pauseButton->setEnabled(false);
@@ -68,9 +70,10 @@ playerWidget::playerWidget(QWidget *parent)
     volumeSlider->setMinimumWidth(150);
     // info items init
     durationSlider = new QSlider(Qt::Horizontal);
-    currentTime = new QToolButton();
-    currentTime->setText("00:00::00");
-    currentTime->setMinimumWidth(100);
+    durationTime = new QToolButton();
+    durationTime->setText("00:00::00");
+    durationTime->setMinimumWidth(100);
+    durationTime->setObjectName("durationTime");
     fileNameLabel = new QLabel("");
 
     QGridLayout* mainLayout = new QGridLayout;
@@ -82,7 +85,7 @@ playerWidget::playerWidget(QWidget *parent)
     mainLayout->addWidget(videoScreen, 2, 0, 1, 12);
 
     mainLayout->addWidget(fileNameLabel, 3, 1, 1, 6);
-    mainLayout->addWidget(currentTime, 3, 9, 1, 3);
+    mainLayout->addWidget(durationTime, 3, 9, 1, 3);
 
     mainLayout->addWidget(durationSlider, 4, 1, 1, 8);
     mainLayout->addWidget(openFileButton, 4, 10, 1, 1);
@@ -108,7 +111,7 @@ playerWidget::playerWidget(QWidget *parent)
     connect(mediaPlayer, &QMediaPlayer::durationChanged, this, &playerWidget::slotSetDuration);
     connect(mediaPlayer, &QMediaPlayer::positionChanged, this, &playerWidget::slotSetSliderPosition);
     connect(durationSlider, &QSlider::sliderMoved, this, &playerWidget::slotSetMediaPosition);
-    connect(currentTime, &QPushButton::clicked, this, &playerWidget::slotChangeDurationInfo);
+    connect(durationTime, &QPushButton::clicked, this, &playerWidget::slotChangeDurationInfo);
     // video connections
     connect(mediaPlayer, &QMediaPlayer::durationChanged, this, &playerWidget::slotIsVideoAvailable);
     connect(fullScreenButton, &QToolButton::clicked, this, &playerWidget::slotToFullScreen);
@@ -176,6 +179,22 @@ void playerWidget::mouseDoubleClickEvent(QMouseEvent *event)
     qDebug() << "Double click";
 }
 
+void playerWidget::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key()) {
+        case Qt::Key_Escape:
+            if(mediaPlayer->isVideoAvailable()){
+                if (videoScreen->isFullScreen()){
+                    videoScreen->showNormal();
+                    videoScreen->setFullScreen(false);
+                }
+            }
+            break;
+        default:
+            break;
+    }
+}
+
 QString playerWidget::msecToTimeString(qint64 duration)
 {
     qint64 hours = duration/(60*60*1000);
@@ -187,11 +206,11 @@ QString playerWidget::msecToTimeString(qint64 duration)
 
 void playerWidget::setDurationTime(qint64 pos)
 {
-    if(bIsCurrentTime){
-        currentTime->setText(msecToTimeString(pos));
+    if(bIsDurationTime){
+        durationTime->setText(msecToTimeString(pos));
     }
     else{
-        currentTime->setText(msecToTimeString(durationSlider->maximum() - pos));
+        durationTime->setText(msecToTimeString(durationSlider->maximum() - pos));
     }
 }
 
@@ -275,11 +294,11 @@ void playerWidget::slotSetDuration(qint64 duration)
 
 void playerWidget::slotChangeDurationInfo()
 {
-    if(bIsCurrentTime){
-        bIsCurrentTime = false;
+    if(bIsDurationTime){
+        bIsDurationTime = false;
     }
     else{
-        bIsCurrentTime = true;
+        bIsDurationTime = true;
     }
 }
 

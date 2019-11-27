@@ -19,10 +19,11 @@ public:
     ~playerWidget();
 
 protected:
-    void mouseMoveEvent(QMouseEvent* event);
-    void mousePressEvent(QMouseEvent* event);
-    void mouseReleaseEvent(QMouseEvent* event);
-    void mouseDoubleClickEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
+    void keyPressEvent(QKeyEvent* event) override;
 
 private:
     QMediaPlayer* mediaPlayer = nullptr;
@@ -40,14 +41,14 @@ private:
     QSlider* volumeSlider = nullptr;
     // info items
     QSlider* durationSlider = nullptr;
-    QToolButton* currentTime = nullptr;
+    QToolButton* durationTime = nullptr;
     QLabel* fileNameLabel = nullptr;
     // helper variables
     QPoint lastMousePosition;
     bool bIsMovingAvailable = false;
     QString msecToTimeString(qint64);
     void setDurationTime(qint64);
-    bool bIsCurrentTime = true;
+    bool bIsDurationTime = true;
 
 private slots:
     void slotMaximized();
