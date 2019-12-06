@@ -44,7 +44,7 @@ private:
     QToolButton* durationTime = nullptr;
     QLabel* fileNameLabel = nullptr;
     // helper variables
-    QPoint lastMousePosition;
+    QPoint dragPosition;
     bool bIsMovingAvailable = false;
     QString msecToTimeString(qint64);
     void setDurationTime(qint64);

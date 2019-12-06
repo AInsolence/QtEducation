@@ -136,34 +136,26 @@ playerWidget::~playerWidget()
 
 void playerWidget::mouseMoveEvent(QMouseEvent *event)
 {
-    Q_UNUSED(event)
-
-    if(titlebarWidget->underMouse() && playerWindowTitle->underMouse()){
+    if(titlebarWidget->underMouse() || playerWindowTitle->underMouse()){
         if( event->buttons().testFlag(Qt::LeftButton) && bIsMovingAvailable) {
-            this->move(this->pos() + (event->pos() - lastMousePosition));
+            this->move(event->globalPos() - dragPosition);
           }
       }
 }
 
 void playerWidget::mousePressEvent(QMouseEvent *event)
 {
-    Q_UNUSED(event)
-
-    if(titlebarWidget->underMouse() && playerWindowTitle->underMouse()){
+    if(titlebarWidget->underMouse() || playerWindowTitle->underMouse()){
             bIsMovingAvailable = true;
-            lastMousePosition = event->pos();
+            dragPosition = event->globalPos() - frameGeometry().topLeft();
       }
 }
 
 void playerWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-    Q_UNUSED(event)
-
-    if(titlebarWidget->underMouse() && playerWindowTitle->underMouse()){
-        if(event->button() == Qt::LeftButton) {
-            bIsMovingAvailable = false;
-          }
-      }
+    if(event->button() == Qt::LeftButton) {
+        bIsMovingAvailable = false;
+    }
 }
 
 void playerWidget::mouseDoubleClickEvent(QMouseEvent *event)
