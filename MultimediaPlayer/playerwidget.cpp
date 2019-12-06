@@ -202,6 +202,7 @@ void playerWidget::keyPressEvent(QKeyEvent *event)
 
 void playerWidget::closeEvent(QCloseEvent *event)
 {
+    Q_UNUSED(event)
     slotWriteSettings();
 }
 
@@ -211,7 +212,9 @@ QString playerWidget::msecToTimeString(qint64 duration)
     qint64 minutes = (duration%(60*60*1000))/(60*1000);
     qint64 seconds = duration%(60*1000)/1000;
 
-    return QTime(hours, minutes, seconds).toString("hh:mm:ss");
+    return QTime(static_cast<int>(hours),
+                 static_cast<int>(minutes),
+                 static_cast<int>(seconds)).toString("hh:mm:ss");
 }
 
 void playerWidget::setDurationTime(qint64 pos)
@@ -290,18 +293,18 @@ void playerWidget::slotSetMediaPosition(qint64 pos)
 
 void playerWidget::slotSetSliderPosition(qint64 pos)
 {
-    durationSlider->setValue(pos);
+    durationSlider->setValue(static_cast<int>(pos));
     setDurationTime(pos);
 }
 
 void playerWidget::slotSetVolume(qint64 value)
 {
-    mediaPlayer->setVolume(value);
+    mediaPlayer->setVolume(static_cast<int>(value));
 }
 
 void playerWidget::slotSetDuration(qint64 duration)
 {
-    durationSlider->setRange(0, duration);
+    durationSlider->setRange(0, static_cast<int>(duration));
     setDurationTime(0);
 }
 
