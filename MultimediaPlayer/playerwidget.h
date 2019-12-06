@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QtMultimedia/QMediaPlayer>
+#include <QSettings>
 
 class QPushButton;
 class QToolButton;
@@ -24,9 +25,11 @@ protected:
     void mouseReleaseEvent(QMouseEvent* event) override;
     void mouseDoubleClickEvent(QMouseEvent *event) override;
     void keyPressEvent(QKeyEvent* event) override;
+    void closeEvent(QCloseEvent* event) override;
 
 private:
     QMediaPlayer* mediaPlayer = nullptr;
+    QSettings settings;
     // top line
     QWidget* titlebarWidget = nullptr;
     QLabel* playerWindowTitle = nullptr;
@@ -49,6 +52,8 @@ private:
     QString msecToTimeString(qint64);
     void setDurationTime(qint64);
     bool bIsDurationTime = true;
+    QString lastFileOpened;
+    qint64 lastFilePosition;
 
 private slots:
     void slotMaximized();
@@ -63,5 +68,7 @@ private slots:
     void slotChangeDurationInfo();
     void slotIsVideoAvailable();
     void slotToFullScreen();
+    void slotReadSettings();
+    void slotWriteSettings();
 };
 #endif // PLAYERWIDGET_H

@@ -10,7 +10,7 @@
 #include <QMouseEvent>
 
 playerWidget::playerWidget(QWidget *parent)
-    : QWidget(parent)
+    : QWidget(parent), settings("AInsolence", "Media Player v0.1")
 {
     mediaPlayer = new QMediaPlayer(this);
     //
@@ -128,6 +128,20 @@ playerWidget::playerWidget(QWidget *parent)
     ensurePolished();
 
     setLayout(mainLayout);
+    /// SETTINGS
+    slotReadSettings();
+    // set previous file as a current media
+    if(!lastFileOpened.isEmpty()){
+        mediaPlayer->setMedia(QUrl::fromLocalFile(lastFileOpened));
+        mediaPlayer->setPosition(lastFilePosition);
+        // get song name to show
+        QStringList nameParse = lastFileOpened.split("/");
+        fileNameLabel->setText(nameParse[nameParse.length() - 1]);
+
+        playButton->setEnabled(true);
+        pauseButton->setEnabled(true);
+        stopButton->setEnabled(true);
+    }
 }
 
 playerWidget::~playerWidget()
@@ -168,7 +182,6 @@ void playerWidget::mouseDoubleClickEvent(QMouseEvent *event)
     if(videoScreen->underMouse()){
         slotToFullScreen();
     }
-    qDebug() << "Double click";
 }
 
 void playerWidget::keyPressEvent(QKeyEvent *event)
@@ -185,6 +198,11 @@ void playerWidget::keyPressEvent(QKeyEvent *event)
         default:
             break;
     }
+}
+
+void playerWidget::closeEvent(QCloseEvent *event)
+{
+    slotWriteSettings();
 }
 
 QString playerWidget::msecToTimeString(qint64 duration)
@@ -222,6 +240,9 @@ void playerWidget::slotOpen()
 
     if(!fileName.isEmpty()){
         mediaPlayer->setMedia(QUrl::fromLocalFile(fileName));
+        qDebug() << fileName;
+        // TODO change it if playlist will be
+        lastFileOpened = fileName;
         // get song name to show
         QStringList nameParse = fileName.split("/");
         fileNameLabel->setText(nameParse[nameParse.length() - 1]);
@@ -316,4 +337,30 @@ void playerWidget::slotToFullScreen()
             videoScreen->setFullScreen(false);
         }
     }
+}
+
+void playerWidget::slotReadSettings()
+{
+    settings.beginGroup("/Settings");
+
+    lastFileOpened = settings.value("/currentFile", "").toString();
+    lastFilePosition =
+                settings.value("/currentTime", "0").toLongLong();
+    volumeSlider->setValue(
+                settings.value("/volume", volumeSlider->value()).toInt());
+    bIsDurationTime = settings.value("/bIsDurationTime", "true").toBool();
+
+    settings.endGroup();
+}
+
+void playerWidget::slotWriteSettings()
+{
+    settings.beginGroup("/Settings");
+
+    settings.setValue("/currentFile", lastFileOpened);
+    settings.setValue("/currentTime", mediaPlayer->position());
+    settings.setValue("/volume", volumeSlider->value());
+    settings.setValue("/bIsDurationTime", bIsDurationTime);
+
+    settings.endGroup();
 }
