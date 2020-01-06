@@ -17,7 +17,7 @@ class playerWidget : public QWidget
 
 public:
     playerWidget(QWidget *parent = nullptr);
-    ~playerWidget();
+    ~playerWidget() override;
 
 protected:
     void mouseMoveEvent(QMouseEvent* event) override;
@@ -29,7 +29,6 @@ protected:
 
 private:
     QMediaPlayer* mediaPlayer = nullptr;
-    QSettings settings;
     // top line
     QWidget* titlebarWidget = nullptr;
     QLabel* playerWindowTitle = nullptr;

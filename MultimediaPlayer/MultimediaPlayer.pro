@@ -17,9 +17,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
+    myapplication.cpp \
     playerwidget.cpp
 
 HEADERS += \
+    myapplication.h \
     playerwidget.h
 
 # Default rules for deployment.

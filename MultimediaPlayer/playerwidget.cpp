@@ -8,9 +8,11 @@
 #include <QTime>
 #include <QVideoWidget>
 #include <QMouseEvent>
+#include <QSessionManager>
+#include "myapplication.h"
 
 playerWidget::playerWidget(QWidget *parent)
-    : QWidget(parent), settings("AInsolence", "Media Player v0.1")
+    : QWidget(parent)
 {
     mediaPlayer = new QMediaPlayer(this);
     //
@@ -25,7 +27,7 @@ playerWidget::playerWidget(QWidget *parent)
     titlebarWidget = new QWidget(this);
     titlebarWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     titlebarWidget->setObjectName("titleBar");
-    QGridLayout* titleLayout = new QGridLayout;
+    QGridLayout* titleLayout = new QGridLayout(this);
     titleLayout->setSpacing(0);
     titleLayout->setMargin(0);
     titlebarWidget->setLayout(titleLayout);
@@ -35,11 +37,11 @@ playerWidget::playerWidget(QWidget *parent)
     playerWindowTitle->setObjectName("playerTitle");
     playerWindowTitle->setText(this->windowTitle());
 
-    QToolButton* shutdownButton = new QToolButton();
+    QToolButton* shutdownButton = new QToolButton(this);
     shutdownButton->setText("X");
-    QToolButton* maximizeButton = new QToolButton();
+    QToolButton* maximizeButton = new QToolButton(this);
     maximizeButton->setText("|_|");
-    QToolButton* minimizeButton = new QToolButton();
+    QToolButton* minimizeButton = new QToolButton(this);
     minimizeButton->setText("_");
 
 
@@ -50,13 +52,13 @@ playerWidget::playerWidget(QWidget *parent)
     titleLayout->addWidget(shutdownButton, 0, 11, 1, 1);
 
     // player controls init
-    playButton = new QPushButton("&Play");
-    pauseButton = new QPushButton(" || ");
-    stopButton = new QPushButton("&stop");
-    openFileButton = new QToolButton();
+    playButton = new QPushButton("&Play", this);
+    pauseButton = new QPushButton(" || ", this);
+    stopButton = new QPushButton("&stop", this);
+    openFileButton = new QToolButton(this);
     openFileButton->setText(" ^ ");
     openFileButton->setMinimumWidth(40);
-    fullScreenButton = new QToolButton();
+    fullScreenButton = new QToolButton(this);
     fullScreenButton->setText("<->");
     fullScreenButton->setMinimumWidth(40);
 
@@ -64,19 +66,19 @@ playerWidget::playerWidget(QWidget *parent)
     pauseButton->setEnabled(false);
     stopButton->setEnabled(false);
 
-    volumeSlider = new QSlider(Qt::Horizontal);
+    volumeSlider = new QSlider(Qt::Horizontal, this);
     volumeSlider->setRange(0, 100);
     volumeSlider->setValue(100);
     volumeSlider->setMinimumWidth(150);
     // info items init
-    durationSlider = new QSlider(Qt::Horizontal);
-    durationTime = new QToolButton();
+    durationSlider = new QSlider(Qt::Horizontal, this);
+    durationTime = new QToolButton(this);
     durationTime->setText("00:00::00");
     durationTime->setMinimumWidth(100);
     durationTime->setObjectName("durationTime");
-    fileNameLabel = new QLabel("");
+    fileNameLabel = new QLabel("", this);
 
-    QGridLayout* mainLayout = new QGridLayout;
+    QGridLayout* mainLayout = new QGridLayout(this);
     mainLayout->setSpacing(0);
     mainLayout->setMargin(0);
 
@@ -142,6 +144,12 @@ playerWidget::playerWidget(QWidget *parent)
         pauseButton->setEnabled(true);
         stopButton->setEnabled(true);
     }
+    connect(MyApplication::getApp(), &QApplication::commitDataRequest,
+            this, &playerWidget::slotWriteSettings);
+    connect(MyApplication::getApp(), &QApplication::commitDataRequest,
+            [](QSessionManager& sm){
+                sm.setRestartHint(QSessionManager::RestartAnyway);
+    });
 }
 
 playerWidget::~playerWidget()
@@ -150,11 +158,9 @@ playerWidget::~playerWidget()
 
 void playerWidget::mouseMoveEvent(QMouseEvent *event)
 {
-    if(titlebarWidget->underMouse() || playerWindowTitle->underMouse()){
         if( event->buttons().testFlag(Qt::LeftButton) && bIsMovingAvailable) {
             this->move(event->globalPos() - dragPosition);
           }
-      }
 }
 
 void playerWidget::mousePressEvent(QMouseEvent *event)
@@ -188,11 +194,10 @@ void playerWidget::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key()) {
         case Qt::Key_Escape:
-            if(mediaPlayer->isVideoAvailable()){
-                if (videoScreen->isFullScreen()){
+            if (videoScreen->isFullScreen()){
                     videoScreen->showNormal();
                     videoScreen->setFullScreen(false);
-                }
+                    qDebug() << "Escape pressed";
             }
             break;
         default:
@@ -230,7 +235,9 @@ void playerWidget::setDurationTime(qint64 pos)
 void playerWidget::slotMaximized()
 {
     if (this->windowState() == Qt::WindowNoState){
-        this->setWindowState(Qt::WindowMaximized);
+        if(mediaPlayer->isVideoAvailable()){
+            this->setWindowState(Qt::WindowMaximized);
+        }
     }
     else {
         this->setWindowState(Qt::WindowNoState);
@@ -243,7 +250,6 @@ void playerWidget::slotOpen()
 
     if(!fileName.isEmpty()){
         mediaPlayer->setMedia(QUrl::fromLocalFile(fileName));
-        qDebug() << fileName;
         // TODO change it if playlist will be
         lastFileOpened = fileName;
         // get song name to show
@@ -344,26 +350,28 @@ void playerWidget::slotToFullScreen()
 
 void playerWidget::slotReadSettings()
 {
-    settings.beginGroup("/Settings");
+    QSettings* settings = MyApplication::getApp()->settings();
+    settings->beginGroup("/Settings");
 
-    lastFileOpened = settings.value("/currentFile", "").toString();
+    lastFileOpened = settings->value("/currentFile", "").toString();
     lastFilePosition =
-                settings.value("/currentTime", "0").toLongLong();
+                settings->value("/currentTime", "0").toLongLong();
     volumeSlider->setValue(
-                settings.value("/volume", volumeSlider->value()).toInt());
-    bIsDurationTime = settings.value("/bIsDurationTime", "true").toBool();
+                settings->value("/volume", volumeSlider->value()).toInt());
+    bIsDurationTime = settings->value("/bIsDurationTime", "true").toBool();
 
-    settings.endGroup();
+    settings->endGroup();
 }
 
 void playerWidget::slotWriteSettings()
 {
-    settings.beginGroup("/Settings");
+    QSettings* settings = MyApplication::getApp()->settings();
+    settings->beginGroup("/Settings");
 
-    settings.setValue("/currentFile", lastFileOpened);
-    settings.setValue("/currentTime", mediaPlayer->position());
-    settings.setValue("/volume", volumeSlider->value());
-    settings.setValue("/bIsDurationTime", bIsDurationTime);
+    settings->setValue("/currentFile", lastFileOpened);
+    settings->setValue("/currentTime", mediaPlayer->position());
+    settings->setValue("/volume", volumeSlider->value());
+    settings->setValue("/bIsDurationTime", bIsDurationTime);
 
-    settings.endGroup();
+    settings->endGroup();
 }
