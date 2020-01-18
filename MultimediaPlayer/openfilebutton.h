@@ -2,13 +2,14 @@
 #define OPENFILEBUTTON_H
 
 #include <QObject>
-#include "iplayercommand.h"
+#include "icommoncommand.h"
 #include <QLabel>
+#include <QMediaPlayer>
 
-class OpenFileButton : public IPlayerCommand
+class OpenFileButton : public ICommonCommand
 {
 public:
-    explicit OpenFileButton(const QString& text,
+    explicit OpenFileButton(const QString&& text,
                         QMediaPlayer& mediaPlayer,
                         QLabel& fileNameLabel,
                         QWidget *parent = nullptr);
@@ -16,10 +17,9 @@ public:
     QString getLastFileOpened() const;
     void setLastFileOpened(const QString&);
 private:
-    using IPlayerCommand::_mediaPlayer;
+    QMediaPlayer& _mediaPlayer;
     QString _lastFileOpened = "";
     QLabel& _fileNameLabel;
-    QWidget* _parent;
 public slots:
     virtual void slotExecute() override final;
 };

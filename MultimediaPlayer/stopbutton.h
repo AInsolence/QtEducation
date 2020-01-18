@@ -7,13 +7,13 @@
 class StopButton : public IPlayerCommand
 {
 public:
-    explicit StopButton(const QString& text,
+    explicit StopButton(const QString&& text,
                         QMediaPlayer& mediaPlayer,
                         QWidget *parent = nullptr);
 private:
     using IPlayerCommand::_mediaPlayer;
 public slots:
-    virtual void slotExecute() override final;
+    virtual void slotExecute() const override final;
 };
 
 #endif // STOPBUTTON_H

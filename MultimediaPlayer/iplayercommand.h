@@ -15,7 +15,7 @@ public:
 protected:
     QMediaPlayer& _mediaPlayer;
 public slots:
-    virtual void slotExecute() = 0;
+    virtual void slotExecute() const = 0;
 };
 
 #endif // IPLAYERCOMMAND_H

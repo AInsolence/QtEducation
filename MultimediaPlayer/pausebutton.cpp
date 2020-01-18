@@ -1,13 +1,13 @@
 #include "pausebutton.h"
 
-PauseButton::PauseButton(const QString& text,
+PauseButton::PauseButton(const QString&& text,
                        QMediaPlayer& mediaPlayer,
                        QWidget *parent)
     : IPlayerCommand(mediaPlayer, text, parent)
 {
 }
 
-void PauseButton::slotExecute()
+void PauseButton::slotExecute() const
 {
     switch (_mediaPlayer.state()) {
         case QMediaPlayer::PlayingState:

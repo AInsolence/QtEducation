@@ -7,13 +7,13 @@
 class PlayButton : public IPlayerCommand
 {
 public:
-    explicit PlayButton(const QString& text,
+    explicit PlayButton(const QString&& text,
                         QMediaPlayer& mediaPlayer,
                         QWidget *parent = nullptr);
 private:
     using IPlayerCommand::_mediaPlayer;
 public slots:
-    virtual void slotExecute() override final;
+    virtual void slotExecute() const override final;
 };
 
 #endif // PLAYBUTTON_H

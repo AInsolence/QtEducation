@@ -16,22 +16,30 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    icommoncomand.cpp \
     iplayercommand.cpp \
     main.cpp \
+    maximizebutton.cpp \
+    minimizebutton.cpp \
     myapplication.cpp \
     openfilebutton.cpp \
     pausebutton.cpp \
     playbutton.cpp \
     playerwidget.cpp \
+    shutdownbutton.cpp \
     stopbutton.cpp
 
 HEADERS += \
+    icommoncommand.h \
     iplayercommand.h \
+    maximizebutton.h \
+    minimizebutton.h \
     myapplication.h \
     openfilebutton.h \
     pausebutton.h \
     playbutton.h \
     playerwidget.h \
+    shutdownbutton.h \
     stopbutton.h
 
 # Default rules for deployment.

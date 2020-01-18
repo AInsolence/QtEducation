@@ -4,14 +4,15 @@
 #include <QWidget>
 #include <QtMultimedia/QMediaPlayer>
 #include <QSettings>
+#include <QVideoWidget>
+#include <QGridLayout>
 #include "iplayercommand.h"
+#include "icommoncommand.h"
 #include "openfilebutton.h"
 
-class QPushButton;
 class QToolButton;
 class QLabel;
 class QSlider;
-class QVideoWidget;
 
 class playerWidget : public QWidget
 {
@@ -32,20 +33,28 @@ protected:
     void closeEvent(QCloseEvent* event) override;
 
 private:
-    QMediaPlayer* mediaPlayer = nullptr;
+    QMediaPlayer mediaPlayer;
+    // layouts
+    QGridLayout* titleLayout = nullptr;
+    QGridLayout* mainLayout = nullptr;
     // top line
-    QWidget* titlebarWidget = nullptr;
-    QLabel* playerWindowTitle = nullptr;
+    QWidget titlebarWidget;
+    QLabel playerWindowTitle;
     // screen
-    QVideoWidget* videoScreen = nullptr;
+    QVideoWidget videoScreen;
     // player controls
+    ICommonCommand* shutDownButton = nullptr;
+    ICommonCommand* minimizedButton = nullptr;
+    ICommonCommand* maximizedButton = nullptr;
+
     IPlayerCommand* playButton = nullptr;
     IPlayerCommand* pauseButton = nullptr;
     IPlayerCommand* stopButton = nullptr;
     OpenFileButton* openFileButton = nullptr;
     QToolButton* fullScreenButton = nullptr;
-    QSlider* volumeSlider = nullptr;
+
     // info items
+    QSlider* volumeSlider = nullptr;
     QSlider* durationSlider = nullptr;
     QToolButton* durationTime = nullptr;
     QLabel* fileNameLabel = nullptr;
@@ -58,7 +67,6 @@ private:
     qint64 lastFilePosition;
 
 private slots:
-    void slotMaximized();
     void slotSetMediaPosition(qint64);
     void slotSetSliderPosition(qint64);
     void slotSetVolume(qint64);

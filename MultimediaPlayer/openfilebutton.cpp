@@ -1,11 +1,12 @@
 #include "openfilebutton.h"
 #include <QFileDialog>
 
-OpenFileButton::OpenFileButton(const QString& text,
+OpenFileButton::OpenFileButton(const QString&& text,
                        QMediaPlayer& mediaPlayer,
                        QLabel& fileNameLabel,
                        QWidget *parent)
-    : IPlayerCommand(mediaPlayer, text, parent),
+    : ICommonCommand(text, parent),
+      _mediaPlayer(mediaPlayer),
       _fileNameLabel(fileNameLabel)
 {
 
