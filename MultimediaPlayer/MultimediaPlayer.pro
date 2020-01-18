@@ -16,13 +16,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    iplayercommand.cpp \
     main.cpp \
     myapplication.cpp \
-    playerwidget.cpp
+    openfilebutton.cpp \
+    pausebutton.cpp \
+    playbutton.cpp \
+    playerwidget.cpp \
+    stopbutton.cpp
 
 HEADERS += \
+    iplayercommand.h \
     myapplication.h \
-    playerwidget.h
+    openfilebutton.h \
+    pausebutton.h \
+    playbutton.h \
+    playerwidget.h \
+    stopbutton.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

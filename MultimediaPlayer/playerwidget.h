@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QtMultimedia/QMediaPlayer>
 #include <QSettings>
+#include "iplayercommand.h"
+#include "openfilebutton.h"
 
 class QPushButton;
 class QToolButton;
@@ -18,6 +20,8 @@ class playerWidget : public QWidget
 public:
     playerWidget(QWidget *parent = nullptr);
     ~playerWidget() override;
+
+
 
 protected:
     void mouseMoveEvent(QMouseEvent* event) override;
@@ -35,10 +39,10 @@ private:
     // screen
     QVideoWidget* videoScreen = nullptr;
     // player controls
-    QPushButton* playButton = nullptr;
-    QPushButton* pauseButton = nullptr;
-    QPushButton* stopButton = nullptr;
-    QToolButton* openFileButton = nullptr;
+    IPlayerCommand* playButton = nullptr;
+    IPlayerCommand* pauseButton = nullptr;
+    IPlayerCommand* stopButton = nullptr;
+    OpenFileButton* openFileButton = nullptr;
     QToolButton* fullScreenButton = nullptr;
     QSlider* volumeSlider = nullptr;
     // info items
@@ -51,15 +55,10 @@ private:
     QString msecToTimeString(qint64);
     void setDurationTime(qint64);
     bool bIsDurationTime = true;
-    QString lastFileOpened;
     qint64 lastFilePosition;
 
 private slots:
     void slotMaximized();
-    void slotOpen();
-    void slotPlay();
-    void slotPause();
-    void slotStop();
     void slotSetMediaPosition(qint64);
     void slotSetSliderPosition(qint64);
     void slotSetVolume(qint64);
