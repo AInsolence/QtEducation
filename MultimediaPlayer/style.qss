@@ -1,7 +1,7 @@
 * {
     background: qlineargradient( x1:0, y1:1, x2:0, y2:0,
                                  stop: 1 rgb(8, 50, 59));
-    color: white;
+    color: rgba(255, 255, 255, 150);
   }
 
 QWidget#titleBar{
@@ -9,7 +9,12 @@ QWidget#titleBar{
 }
 
 QLabel#playerTitle {
-    border: 1px solid rgba(142, 142, 245, 80);
+    border: 3px solid rgba(142, 142, 245, 30);
+    margin: 0px;
+}
+
+QToolButton{
+    border: 3px solid rgba(142, 142, 245, 40);
 }
 
 QToolButton#durationTime{
@@ -24,13 +29,13 @@ QPushButton {
                                              stop: 1   rgb(10, 133, 135),
                                              stop: 0.4 rgb(31, 31, 33));
 
-                border: 1px solid white;
+                border: 1px solid rgba(142, 142, 245, 30);
                 border-radius: 5px;
             }
 
 QPushButton:hover {
                         background: qlineargradient( x1:0, y1:1, x2:0, y2:0,
-                                                     stop: 1   rgb(13, 133, 135),
+                                                     stop: 1   rgb(43, 133, 135),
                                                      stop: 0.4 rgb(31, 31, 33),
                                                      stop: 0.2 rgb(100, 100, 150));
                      }
@@ -41,7 +46,7 @@ QPushButton:pressed {
                                                      stop: 0.6 rgba(18, 18, 212, 80),
                                                      stop: 0.5 rgba(142, 142, 245, 80));
 
-                         border: 1px solid rgb(18, 18, 212);
+                         border: 1px solid rgba(142, 142, 245, 30);
                       }
 
 QPushButton:checked {
@@ -67,7 +72,7 @@ QPushButton:disabled {
                               }
 
 QSlider::groove:horizontal {
-    border: 1px solid #999999;
+    border: 1px solid rgba(142, 142, 245, 30);
     height: 8px;
     background: qlineargradient( x1:0, y1:1, x2:0, y2:0,
                                  stop: 1   rgb(10, 100, 110),
