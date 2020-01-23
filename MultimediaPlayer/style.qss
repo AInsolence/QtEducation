@@ -17,6 +17,10 @@ QToolButton{
     border: 3px solid rgba(142, 142, 245, 40);
 }
 
+QToolButton:hover {
+                        color: yellow;
+                     }
+
 QToolButton#durationTime{
     border: none;
 }
@@ -34,10 +38,7 @@ QPushButton {
             }
 
 QPushButton:hover {
-                        background: qlineargradient( x1:0, y1:1, x2:0, y2:0,
-                                                     stop: 1   rgb(43, 133, 135),
-                                                     stop: 0.4 rgb(31, 31, 33),
-                                                     stop: 0.2 rgb(100, 100, 150));
+                        color: yellow;
                      }
 
 QPushButton:pressed {
@@ -88,4 +89,8 @@ QSlider::handle:horizontal {
     width: 18px;
     margin: -2px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */
     border-radius: 3px;
+}
+
+QSlider::handle:horizontal:hover {
+    background: yellow;
 }

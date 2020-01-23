@@ -35,7 +35,7 @@ playerWidget::playerWidget(QWidget *parent)
     titleLayout->setMargin(0);
     titlebarWidget.setLayout(titleLayout);
 
-    setWindowTitle("Media Player v0.1");
+    setWindowTitle("Media Player v0.2");
     playerWindowTitle.setParent(&titlebarWidget);
     playerWindowTitle.setObjectName("playerTitle");
     playerWindowTitle.setText(this->windowTitle());
