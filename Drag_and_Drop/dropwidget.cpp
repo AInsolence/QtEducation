@@ -7,7 +7,7 @@ DropWidget::DropWidget(const QString &text, QWidget *parent)
 {
     setGeometry(0, 0, 500, 500);
     setAlignment(Qt::AlignCenter);
-    // accept drops
+    // !NOTE: accept drops
     setAcceptDrops(true);
 }
 
@@ -25,7 +25,7 @@ void DropWidget::dragEnterEvent(QDragEnterEvent *eventDrag)
     if(!formats.filter("audio/").empty() ||
        !formats.filter("video/").empty() ||
        !formats.filter("text/").empty())
-    {
+    {// !NOTE: accept proposed drops
         eventDrag->acceptProposedAction();
     }
 }
