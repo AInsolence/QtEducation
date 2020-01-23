@@ -25,11 +25,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        dropwidget.cpp \
         main.cpp \
         dragwidget.cpp
 
 HEADERS += \
-        dragwidget.h
+        dragwidget.h \
+        dropwidget.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
