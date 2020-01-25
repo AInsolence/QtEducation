@@ -33,9 +33,5 @@ void OpenFileButton::slotExecute()
         // get song name to show
         QStringList nameParse = fileName.split("/");
         _fileNameLabel.setText(nameParse[nameParse.length() - 1]);
-
-//        playButton->setEnabled(true);
-//        pauseButton->setEnabled(true);
-//        stopButton->setEnabled(true);
     }
 }

@@ -14,13 +14,13 @@ class QToolButton;
 class QLabel;
 class QSlider;
 
-class playerWidget : public QWidget
+class PlayerWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    playerWidget(QWidget *parent = nullptr);
-    ~playerWidget() override;
+    PlayerWidget(QWidget *parent = nullptr);
+    ~PlayerWidget() override;
 
 
 

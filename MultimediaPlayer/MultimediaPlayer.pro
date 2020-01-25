@@ -20,12 +20,14 @@ SOURCES += \
     iplayercommand.cpp \
     main.cpp \
     maximizebutton.cpp \
+    mediaplayer.cpp \
     minimizebutton.cpp \
     myapplication.cpp \
     openfilebutton.cpp \
     pausebutton.cpp \
     playbutton.cpp \
     playerwidget.cpp \
+    playlistwidget.cpp \
     shutdownbutton.cpp \
     stopbutton.cpp
 
@@ -33,12 +35,14 @@ HEADERS += \
     icommoncommand.h \
     iplayercommand.h \
     maximizebutton.h \
+    mediaplayer.h \
     minimizebutton.h \
     myapplication.h \
     openfilebutton.h \
     pausebutton.h \
     playbutton.h \
     playerwidget.h \
+    playlistwidget.h \
     shutdownbutton.h \
     stopbutton.h
 

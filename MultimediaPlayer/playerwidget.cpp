@@ -1,4 +1,4 @@
-#include "playerwidget.h"
+#include "PlayerWidget.h"
 #include <QSlider>
 #include <QLabel>
 #include <QTime>
@@ -14,7 +14,7 @@
 #include "minimizebutton.h"
 #include "maximizebutton.h"
 
-playerWidget::playerWidget(QWidget *parent)
+PlayerWidget::PlayerWidget(QWidget *parent)
     : QWidget(parent)
 {
     mediaPlayer.setParent(this);
@@ -25,8 +25,6 @@ playerWidget::playerWidget(QWidget *parent)
     mediaPlayer.setVideoOutput(&videoScreen);
 
     // main window controls
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowSystemMenuHint);
-
     titlebarWidget.setParent(this);
     titlebarWidget.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     titlebarWidget.setObjectName("titleBar");
@@ -91,24 +89,15 @@ playerWidget::playerWidget(QWidget *parent)
     mainLayout->addWidget(fullScreenButton, 5, 10, 1, 1);
 
     // volume slider connect
-    connect(volumeSlider, &QSlider::valueChanged, this, &playerWidget::slotSetVolume);
+    connect(volumeSlider, &QSlider::valueChanged, this, &PlayerWidget::slotSetVolume);
     // duration slider connections
-    connect(&mediaPlayer, &QMediaPlayer::durationChanged, this, &playerWidget::slotSetDuration);
-    connect(&mediaPlayer, &QMediaPlayer::positionChanged, this, &playerWidget::slotSetSliderPosition);
-    connect(durationSlider, &QSlider::sliderMoved, this, &playerWidget::slotSetMediaPosition);
-    connect(durationTime, &QPushButton::clicked, this, &playerWidget::slotChangeDurationInfo);
+    connect(&mediaPlayer, &QMediaPlayer::durationChanged, this, &PlayerWidget::slotSetDuration);
+    connect(&mediaPlayer, &QMediaPlayer::positionChanged, this, &PlayerWidget::slotSetSliderPosition);
+    connect(durationSlider, &QSlider::sliderMoved, this, &PlayerWidget::slotSetMediaPosition);
+    connect(durationTime, &QPushButton::clicked, this, &PlayerWidget::slotChangeDurationInfo);
     // video connections
-    connect(&mediaPlayer, &QMediaPlayer::durationChanged, this, &playerWidget::slotIsVideoAvailable);
-    connect(fullScreenButton, &QToolButton::clicked, this, &playerWidget::slotToFullScreen);
-    // style
-    QFile styleFile(":/style/style.qss");
-    if(styleFile.open(QFile::ReadOnly)){
-        QString style (styleFile.readAll());
-        setStyleSheet(style);
-    }
-    else {
-        qDebug() << "Cannot open style.qss file";
-    }
+    connect(&mediaPlayer, &QMediaPlayer::durationChanged, this, &PlayerWidget::slotIsVideoAvailable);
+    connect(fullScreenButton, &QToolButton::clicked, this, &PlayerWidget::slotToFullScreen);
 
     ensurePolished();
 
@@ -128,14 +117,14 @@ playerWidget::playerWidget(QWidget *parent)
         stopButton->setEnabled(true);
     }
     connect(MyApplication::getApp(), &QApplication::commitDataRequest,
-            this, &playerWidget::slotWriteSettings);
+            this, &PlayerWidget::slotWriteSettings);
     connect(MyApplication::getApp(), &QApplication::commitDataRequest,
             [](QSessionManager& sm){
                 sm.setRestartHint(QSessionManager::RestartAnyway);
     });
 }
 
-playerWidget::~playerWidget()
+PlayerWidget::~PlayerWidget()
 {
     // controls
     delete shutDownButton;
@@ -157,14 +146,14 @@ playerWidget::~playerWidget()
     delete titleLayout;
 }
 
-void playerWidget::mouseMoveEvent(QMouseEvent *event)
+void PlayerWidget::mouseMoveEvent(QMouseEvent *event)
 {
         if( event->buttons().testFlag(Qt::LeftButton) && bIsMovingAvailable) {
             this->move(event->globalPos() - dragPosition);
           }
 }
 
-void playerWidget::mousePressEvent(QMouseEvent *event)
+void PlayerWidget::mousePressEvent(QMouseEvent *event)
 {
     if(titlebarWidget.underMouse() || playerWindowTitle.underMouse()){
             bIsMovingAvailable = true;
@@ -172,14 +161,14 @@ void playerWidget::mousePressEvent(QMouseEvent *event)
       }
 }
 
-void playerWidget::mouseReleaseEvent(QMouseEvent *event)
+void PlayerWidget::mouseReleaseEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton) {
         bIsMovingAvailable = false;
     }
 }
 
-void playerWidget::mouseDoubleClickEvent(QMouseEvent *event)
+void PlayerWidget::mouseDoubleClickEvent(QMouseEvent *event)
 {
     Q_UNUSED(event)
 
@@ -191,7 +180,7 @@ void playerWidget::mouseDoubleClickEvent(QMouseEvent *event)
     }
 }
 
-void playerWidget::keyPressEvent(QKeyEvent *event)
+void PlayerWidget::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key()) {
         case Qt::Key_Escape:
@@ -206,13 +195,13 @@ void playerWidget::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void playerWidget::closeEvent(QCloseEvent *event)
+void PlayerWidget::closeEvent(QCloseEvent *event)
 {
     Q_UNUSED(event)
     slotWriteSettings();
 }
 
-QString playerWidget::msecToTimeString(qint64 duration)
+QString PlayerWidget::msecToTimeString(qint64 duration)
 {
     qint64 hours = duration/(60*60*1000);
     qint64 minutes = (duration%(60*60*1000))/(60*1000);
@@ -223,7 +212,7 @@ QString playerWidget::msecToTimeString(qint64 duration)
                  static_cast<int>(seconds)).toString("hh:mm:ss");
 }
 
-void playerWidget::setDurationTime(qint64 pos)
+void PlayerWidget::setDurationTime(qint64 pos)
 {
     if(bIsDurationTime){
         durationTime->setText(msecToTimeString(pos));
@@ -233,30 +222,30 @@ void playerWidget::setDurationTime(qint64 pos)
     }
 }
 
-void playerWidget::slotSetMediaPosition(qint64 pos)
+void PlayerWidget::slotSetMediaPosition(qint64 pos)
 {
     mediaPlayer.setPosition(pos);
     setDurationTime(pos);
 }
 
-void playerWidget::slotSetSliderPosition(qint64 pos)
+void PlayerWidget::slotSetSliderPosition(qint64 pos)
 {
     durationSlider->setValue(static_cast<int>(pos));
     setDurationTime(pos);
 }
 
-void playerWidget::slotSetVolume(qint64 value)
+void PlayerWidget::slotSetVolume(qint64 value)
 {
     mediaPlayer.setVolume(static_cast<int>(value));
 }
 
-void playerWidget::slotSetDuration(qint64 duration)
+void PlayerWidget::slotSetDuration(qint64 duration)
 {
     durationSlider->setRange(0, static_cast<int>(duration));
     setDurationTime(0);
 }
 
-void playerWidget::slotChangeDurationInfo()
+void PlayerWidget::slotChangeDurationInfo()
 {
     if(bIsDurationTime){
         bIsDurationTime = false;
@@ -266,7 +255,7 @@ void playerWidget::slotChangeDurationInfo()
     }
 }
 
-void playerWidget::slotIsVideoAvailable()
+void PlayerWidget::slotIsVideoAvailable()
 {
     if(mediaPlayer.isVideoAvailable()){
         videoScreen.show();
@@ -277,7 +266,7 @@ void playerWidget::slotIsVideoAvailable()
     }
 }
 
-void playerWidget::slotToFullScreen()
+void PlayerWidget::slotToFullScreen()
 {
     if(mediaPlayer.isVideoAvailable()){
         if (!videoScreen.isFullScreen()){
@@ -290,7 +279,7 @@ void playerWidget::slotToFullScreen()
     }
 }
 
-void playerWidget::slotReadSettings()
+void PlayerWidget::slotReadSettings()
 {
     QSettings* settings = MyApplication::getApp()->settings();
     settings->beginGroup("/Settings");
@@ -305,7 +294,7 @@ void playerWidget::slotReadSettings()
     settings->endGroup();
 }
 
-void playerWidget::slotWriteSettings()
+void PlayerWidget::slotWriteSettings()
 {
     QSettings* settings = MyApplication::getApp()->settings();
     settings->beginGroup("/Settings");

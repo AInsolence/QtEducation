@@ -1,3 +1,4 @@
+#include "mediaplayer.h"
 #include "playerwidget.h"
 
 #include "myapplication.h"
@@ -5,7 +6,7 @@
 int main(int argc, char *argv[])
 {
     MyApplication a(argc, argv, "Anton", "Media Player");
-    playerWidget w;
-    w.show();
+    MediaPlayer player;
+    //PlayerWidget p;
     return a.exec();
 }
