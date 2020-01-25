@@ -24,7 +24,8 @@ void DropWidget::dragEnterEvent(QDragEnterEvent *eventDrag)
     // check dropped MIME object for acceptable formats
     if(!formats.filter("audio/").empty() ||
        !formats.filter("video/").empty() ||
-       !formats.filter("text/").empty())
+       !formats.filter("text/").empty() ||
+       !formats.filter("application/widget").empty()    )
     {// !NOTE: accept proposed drops
         eventDrag->acceptProposedAction();
     }
@@ -32,7 +33,13 @@ void DropWidget::dragEnterEvent(QDragEnterEvent *eventDrag)
 
 // get dropped data and do some actions with it
 void DropWidget::dropEvent(QDropEvent *eventDrop)
-{// get text (or other object) from mimeData object
+{
+    if(!eventDrop->mimeData()->formats().filter("application/widget").empty())
+    {
+        setText(this->text() + "\n" + "Widget dropped");
+        return;
+    }
+    // get text (or other object) from mimeData object
     QString droppedText = eventDrop->mimeData()->text();
     // make manipulations with dragged object
     setText(this->text() + "\n" + "Dropped: " + droppedText);
