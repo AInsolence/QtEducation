@@ -2,4 +2,7 @@
     <qresource prefix="/style">
         <file>style.qss</file>
     </qresource>
+    <qresource prefix="/">
+        <file>supportedFormats.txt</file>
+    </qresource>
 </RCC>

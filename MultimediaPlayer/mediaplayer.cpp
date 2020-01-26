@@ -1,6 +1,8 @@
 #include "mediaplayer.h"
 #include <QFile>
 
+QStringList MediaPlayer::_supportedFormats;
+
 MediaPlayer::MediaPlayer()
 {//TODO set layout for all components
     playerWidget = new PlayerWidget();
@@ -23,6 +25,13 @@ MediaPlayer::MediaPlayer()
         //component->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowSystemMenuHint);
         component->show();
     }
+    QFile supportedFormats(":/supportedFormats.txt");
+    if(supportedFormats.open(QIODevice::ReadOnly | QIODevice::Text)){
+        while(!supportedFormats.atEnd()){
+            MediaPlayer::_supportedFormats.append("*" + supportedFormats.readLine().simplified());
+        }
+    }
+    qDebug() << _supportedFormats;
 }
 
 MediaPlayer::~MediaPlayer()

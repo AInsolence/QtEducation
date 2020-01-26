@@ -5,6 +5,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QDirIterator>
+#include "mediaplayer.h"
 
 PlaylistWidget::PlaylistWidget(QWidget *parent) : QListView(parent)
 {
@@ -36,8 +37,8 @@ void PlaylistWidget::dropEvent(QDropEvent *eventDrop)
         QString localPath = url.toLocalFile();
         QFileInfo info(localPath);
         if(info.isDir()){
-            qDebug() << "Directory: " << localPath;
-            list.append(_scanDirectory(localPath, QStringList() << "*.mp3"));
+            //qDebug() << "Directory: " << localPath;
+            list.append(_scanDirectory(localPath, MediaPlayer::_supportedFormats));
         }
         else{
             list.append(localPath);
@@ -57,7 +58,6 @@ QStringList PlaylistWidget::_scanDirectory(const QString& dirPath,
     QDirIterator it(dirPath, filters, QDir::Files, QDirIterator::Subdirectories);
     while (it.hasNext()){
         result << it.next();
-        qDebug() << result << "/n";
     }
     return result;
 }

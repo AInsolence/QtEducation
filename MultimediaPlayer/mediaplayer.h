@@ -10,6 +10,7 @@ class MediaPlayer : QObject
 public:
     explicit MediaPlayer();
     virtual ~MediaPlayer();
+    static QStringList _supportedFormats;
 private:
     QVector<QWidget*> components;
     QWidget* playerWidget = nullptr;
