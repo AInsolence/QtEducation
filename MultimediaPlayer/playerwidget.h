@@ -65,6 +65,8 @@ private:
     bool bIsDurationTime = true;
     qint64 lastFilePosition;
 
+signals:
+    void signalNextFilePlay();
 public slots:
     void slotPlayMedia(const QModelIndex& item);
     void slotSetMediaPosition(qint64);

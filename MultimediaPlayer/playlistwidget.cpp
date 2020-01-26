@@ -11,9 +11,6 @@ PlaylistWidget::PlaylistWidget(QWidget *parent) : QListView(parent)
 {
     setAcceptDrops(true);
     setModel(&_playlistModel);
-    connect(this, &PlaylistWidget::doubleClicked, this, [](const QModelIndex& song){
-        qDebug() << "Song path: " << song.data().toString();
-    });
 }
 
 void PlaylistWidget::dragMoveEvent(QDragMoveEvent *eventDragMove)
