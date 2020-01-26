@@ -25,13 +25,16 @@ MediaPlayer::MediaPlayer()
         //component->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowSystemMenuHint);
         component->show();
     }
+    // settings
     QFile supportedFormats(":/supportedFormats.txt");
     if(supportedFormats.open(QIODevice::ReadOnly | QIODevice::Text)){
         while(!supportedFormats.atEnd()){
             MediaPlayer::_supportedFormats.append("*" + supportedFormats.readLine().simplified());
         }
     }
-    qDebug() << _supportedFormats;
+    // connections
+    connect(playlistWidget, &PlaylistWidget::doubleClicked,
+            playerWidget, &PlayerWidget::slotPlayMedia);
 }
 
 MediaPlayer::~MediaPlayer()

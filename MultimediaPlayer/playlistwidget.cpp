@@ -11,6 +11,9 @@ PlaylistWidget::PlaylistWidget(QWidget *parent) : QListView(parent)
 {
     setAcceptDrops(true);
     setModel(&_playlistModel);
+    connect(this, &PlaylistWidget::doubleClicked, this, [](const QModelIndex& song){
+        qDebug() << "Song path: " << song.data().toString();
+    });
 }
 
 void PlaylistWidget::dragMoveEvent(QDragMoveEvent *eventDragMove)
@@ -20,11 +23,7 @@ void PlaylistWidget::dragMoveEvent(QDragMoveEvent *eventDragMove)
 
 void PlaylistWidget::dragEnterEvent(QDragEnterEvent *eventDrag)
 {
-//    if(!eventDrag->mimeData()->formats().filter("audio/").empty() ||
-//       !eventDrag->mimeData()->formats().filter("video/").empty())
-    {
         eventDrag->acceptProposedAction();
-    }
 }
 
 void PlaylistWidget::dropEvent(QDropEvent *eventDrop)
@@ -46,9 +45,6 @@ void PlaylistWidget::dropEvent(QDropEvent *eventDrop)
     }
 
     _playlistModel.setStringList(list);
-    qDebug() << "Dropped music: " << eventDrop->mimeData()->formats();
-    qDebug() << "Dropped text: " << list;
-    qDebug() << "Dropped urls: " << eventDrop->mimeData()->hasUrls();
 }
 
 QStringList PlaylistWidget::_scanDirectory(const QString& dirPath,

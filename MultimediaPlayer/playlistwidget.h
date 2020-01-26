@@ -11,6 +11,9 @@ class PlaylistWidget : public QListView
 public:
     explicit PlaylistWidget(QWidget *parent = nullptr);
 protected:
+    //virtual void mousePressEvent(QMouseEvent* eventPress) override;
+
+
     virtual void dragMoveEvent(QDragMoveEvent *eventDragMove) override;
     virtual void dragEnterEvent(QDragEnterEvent* eventDrag) override;
     virtual void dropEvent(QDropEvent* eventDrop) override;

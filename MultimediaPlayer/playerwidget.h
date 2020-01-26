@@ -23,7 +23,6 @@ public:
     ~PlayerWidget() override;
 
 
-
 protected:
     void mouseMoveEvent(QMouseEvent* event) override;
     void mousePressEvent(QMouseEvent* event) override;
@@ -66,7 +65,8 @@ private:
     bool bIsDurationTime = true;
     qint64 lastFilePosition;
 
-private slots:
+public slots:
+    void slotPlayMedia(const QModelIndex& item);
     void slotSetMediaPosition(qint64);
     void slotSetSliderPosition(qint64);
     void slotSetVolume(qint64);

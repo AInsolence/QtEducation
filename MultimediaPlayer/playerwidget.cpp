@@ -1,4 +1,4 @@
-#include "PlayerWidget.h"
+#include "playerwidget.h"
 #include <QSlider>
 #include <QLabel>
 #include <QTime>
@@ -13,6 +13,7 @@
 #include "shutdownbutton.h"
 #include "minimizebutton.h"
 #include "maximizebutton.h"
+#include <QModelIndex>
 
 PlayerWidget::PlayerWidget(QWidget *parent)
     : QWidget(parent)
@@ -220,6 +221,17 @@ void PlayerWidget::setDurationTime(qint64 pos)
     else{
         durationTime->setText(msecToTimeString(durationSlider->maximum() - pos));
     }
+}
+
+void PlayerWidget::slotPlayMedia(const QModelIndex &item)
+{// TODO duplicate in openFileButton
+    QString fileName = item.data().toString();
+    mediaPlayer.setMedia(QUrl::fromLocalFile(fileName));
+    //setLastFileOpened(fileName);
+    // get song name to show
+    QStringList nameParse = fileName.split("/");
+    fileNameLabel->setText(nameParse[nameParse.length() - 1]);
+    playButton->slotExecute();
 }
 
 void PlayerWidget::slotSetMediaPosition(qint64 pos)
