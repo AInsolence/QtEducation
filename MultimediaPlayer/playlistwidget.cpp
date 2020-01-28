@@ -6,11 +6,15 @@
 #include <QDir>
 #include <QDirIterator>
 #include "mediaplayer.h"
+#include "listviewitemdelegate.h"
 
 PlaylistWidget::PlaylistWidget(QWidget *parent) : QListView(parent)
 {
+    ListViewItemDelegate* delegate = new ListViewItemDelegate(this);
     setAcceptDrops(true);
     setModel(&_playlistModel);
+    setEditTriggers(NoEditTriggers);
+    setItemDelegate(delegate);
 }
 
 void PlaylistWidget::dragMoveEvent(QDragMoveEvent *eventDragMove)

@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     icommoncomand.cpp \
     iplayercommand.cpp \
+    listviewitemdelegate.cpp \
     main.cpp \
     maximizebutton.cpp \
     mediaplayer.cpp \
@@ -34,6 +35,7 @@ SOURCES += \
 HEADERS += \
     icommoncommand.h \
     iplayercommand.h \
+    listviewitemdelegate.h \
     maximizebutton.h \
     mediaplayer.h \
     minimizebutton.h \
