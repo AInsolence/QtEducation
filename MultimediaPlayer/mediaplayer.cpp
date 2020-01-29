@@ -42,4 +42,7 @@ MediaPlayer::MediaPlayer()
 
 MediaPlayer::~MediaPlayer()
 {
+    delete playerWidget;
+    delete playlistWidget;
+    delete videoCanvas;
 }

@@ -5,4 +5,5 @@
     <qresource prefix="/">
         <file>supportedFormats.txt</file>
     </qresource>
+    <qresource prefix="/GUI"/>
 </RCC>

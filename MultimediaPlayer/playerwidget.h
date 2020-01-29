@@ -38,7 +38,6 @@ private:
     QGridLayout* titleLayout = nullptr;
     QGridLayout* mainLayout = nullptr;
     // top line
-    QWidget titlebarWidget;
     QLabel playerWindowTitle;
     // screen
     QVideoWidget videoScreen;

@@ -26,28 +26,15 @@ PlayerWidget::PlayerWidget(QWidget *parent)
     mediaPlayer.setVideoOutput(&videoScreen);
 
     // main window controls
-    titlebarWidget.setParent(this);
-    titlebarWidget.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    titlebarWidget.setObjectName("titleBar");
-    QGridLayout* titleLayout = new QGridLayout(this);
-    titleLayout->setSpacing(0);
-    titleLayout->setMargin(0);
-    titlebarWidget.setLayout(titleLayout);
 
     setWindowTitle("Media Player v0.2");
-    playerWindowTitle.setParent(&titlebarWidget);
+    playerWindowTitle.setParent(this);
     playerWindowTitle.setObjectName("playerTitle");
     playerWindowTitle.setText(this->windowTitle());
 
     shutDownButton = new ShutDownButton("X", this);
     maximizedButton = new MaximizeButton("| |", mediaPlayer, this);
     ICommonCommand* minimizeButton = new MinimizeButton("_", this);
-
-    //titleLayout->addWidget(new QLabel("Icon"), 0, 0, 1, 1);
-    titleLayout->addWidget(&playerWindowTitle, 0, 1, 1, 8);
-    titleLayout->addWidget(minimizeButton, 0, 9, 1, 1);
-    titleLayout->addWidget(maximizedButton, 0, 10, 1, 1);
-    titleLayout->addWidget(shutDownButton, 0, 11, 1, 1);
     // info items init
     durationSlider = new QSlider(Qt::Horizontal, this);
     durationTime = new QToolButton(this);
@@ -68,12 +55,17 @@ PlayerWidget::PlayerWidget(QWidget *parent)
     volumeSlider->setRange(0, 100);
     volumeSlider->setValue(100);
     volumeSlider->setMinimumWidth(150);
-
+    // layout
     QGridLayout* mainLayout = new QGridLayout(this);
     mainLayout->setSpacing(0);
     mainLayout->setMargin(0);
-
-    mainLayout->addWidget(&titlebarWidget, 0, 0, 1, 12);
+    // title
+    //TODO set in mediaplayer
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowSystemMenuHint);
+    mainLayout->addWidget(&playerWindowTitle, 0, 0, 1, 9);
+    mainLayout->addWidget(minimizeButton, 0, 9, 1, 1);
+    mainLayout->addWidget(maximizedButton, 0, 10, 1, 1);
+    mainLayout->addWidget(shutDownButton, 0, 11, 1, 1);
 
     mainLayout->addWidget(&videoScreen, 2, 0, 1, 12);
 
@@ -81,13 +73,13 @@ PlayerWidget::PlayerWidget(QWidget *parent)
     mainLayout->addWidget(durationTime, 3, 9, 1, 3);
 
     mainLayout->addWidget(durationSlider, 4, 1, 1, 8);
-    mainLayout->addWidget(openFileButton, 4, 10, 1, 1);
+    mainLayout->addWidget(openFileButton, 4, 11, 1, 1);
 
     mainLayout->addWidget(playButton, 5, 1, 1, 1);
     mainLayout->addWidget(pauseButton, 5, 2, 1, 1);
     mainLayout->addWidget(stopButton, 5, 3, 1, 1);
     mainLayout->addWidget(volumeSlider, 5, 6, 1, 3);
-    mainLayout->addWidget(fullScreenButton, 5, 10, 1, 1);
+    mainLayout->addWidget(fullScreenButton, 5, 11, 1, 1);
 
     // volume slider connect
     connect(volumeSlider, &QSlider::valueChanged, this, &PlayerWidget::slotSetVolume);
@@ -156,7 +148,7 @@ void PlayerWidget::mouseMoveEvent(QMouseEvent *event)
 
 void PlayerWidget::mousePressEvent(QMouseEvent *event)
 {
-    if(titlebarWidget.underMouse() || playerWindowTitle.underMouse()){
+    if(playerWindowTitle.underMouse()){
             bIsMovingAvailable = true;
             dragPosition = event->globalPos() - frameGeometry().topLeft();
       }
@@ -173,7 +165,7 @@ void PlayerWidget::mouseDoubleClickEvent(QMouseEvent *event)
 {
     Q_UNUSED(event)
 
-    if(titlebarWidget.underMouse() && playerWindowTitle.underMouse()){
+    if(playerWindowTitle.underMouse()){
             maximizedButton->slotExecute();
       }
     if(videoScreen.underMouse()){

@@ -42,28 +42,9 @@ QPushButton:hover {
                      }
 
 QPushButton:pressed {
-                         background: qlineargradient( x1:0, y1:0, x2:1, y2:0,
-                                                     stop: 0   rgba(1, 1, 5, 80),
-                                                     stop: 0.6 rgba(18, 18, 212, 80),
-                                                     stop: 0.5 rgba(142, 142, 245, 80));
-
+                         color: red;
                          border: 1px solid rgba(142, 142, 245, 30);
                       }
-
-QPushButton:checked {
-                        background: qlineargradient( x1:0, y1:0, x2:0, y2:1,
-                                                     stop: 1   rgb(0, 133, 135),
-                                                     stop: 0.4 rgb(31, 0, 33));
-
-                        border: 1px solid rgb(18, 18, 212);
-                     }
-
-QPushButton:checked:hover {
-                                background: qlineargradient( x1:0, y1:1, x2:0, y2:0,
-                                                             stop: 1   rgb(31, 31, 33),
-                                                             stop: 0.4 rgb(133, 133, 135),
-                                                             stop: 0.2 rgb(100, 30, 150));
-                              }
 
 QPushButton:disabled {
                                 background: qlineargradient( x1:0, y1:1, x2:0, y2:0,
