@@ -223,15 +223,9 @@ void PlayerWidget::setDurationTime(qint64 pos)
     }
 }
 
-void PlayerWidget::slotPlayMedia(const QModelIndex &item)
-{// TODO duplicate in openFileButton
-    QString fileName = item.data().toString();
-    mediaPlayer.setMedia(QUrl::fromLocalFile(fileName));
-    //setLastFileOpened(fileName);
-    // get song name to show
-    QStringList nameParse = fileName.split("/");
-    fileNameLabel->setText(nameParse[nameParse.length() - 1]);
-    playButton->slotExecute();
+void PlayerWidget::slotPlay()
+{
+    mediaPlayer.play();
 }
 
 void PlayerWidget::slotSetMediaPosition(qint64 pos)

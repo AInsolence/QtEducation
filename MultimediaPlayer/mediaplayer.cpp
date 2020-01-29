@@ -10,6 +10,9 @@ MediaPlayer::MediaPlayer()
 
     playlistWidget = new PlaylistWidget();
     components.push_back(playlistWidget);
+    // set playlist
+    playerWidget->setPlaylist(playlistWidget->getMediaPlaylist());
+
     //videoCanvas = nullptr;
 
     for(auto component : components){
@@ -33,8 +36,8 @@ MediaPlayer::MediaPlayer()
         }
     }
     // connections
-    connect(playlistWidget, &PlaylistWidget::doubleClicked,
-            playerWidget, &PlayerWidget::slotPlayMedia);
+    connect(playlistWidget, &PlaylistWidget::signalPlayFromPlaylist,
+            playerWidget, &PlayerWidget::slotPlay);
 }
 
 MediaPlayer::~MediaPlayer()

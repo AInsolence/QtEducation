@@ -11,10 +11,20 @@
 PlaylistWidget::PlaylistWidget(QWidget *parent) : QListView(parent)
 {
     ListViewItemDelegate* delegate = new ListViewItemDelegate(this);
+
     setAcceptDrops(true);
     setModel(&_playlistModel);
     setEditTriggers(NoEditTriggers);
     setItemDelegate(delegate);
+
+    playlist.setPlaybackMode(QMediaPlaylist::Sequential);
+
+    // connections
+    connect(&_playlistModel, &QStringListModel::dataChanged,
+                    this, &PlaylistWidget::slotRefreshPlaylist);
+
+    connect(this, &PlaylistWidget::doubleClicked,
+            this, &PlaylistWidget::slotSetNewMediaToPlay);
 }
 
 void PlaylistWidget::dragMoveEvent(QDragMoveEvent *eventDragMove)
@@ -46,6 +56,7 @@ void PlaylistWidget::dropEvent(QDropEvent *eventDrop)
     }
 
     _playlistModel.setStringList(list);
+    slotRefreshPlaylist();
 }
 
 QStringList PlaylistWidget::_scanDirectory(const QString& dirPath,
@@ -57,5 +68,20 @@ QStringList PlaylistWidget::_scanDirectory(const QString& dirPath,
         result << it.next();
     }
     return result;
+}
+
+void PlaylistWidget::slotSetNewMediaToPlay(const QModelIndex &index)
+{
+    playlist.setCurrentIndex(index.row());
+    emit signalPlayFromPlaylist();
+}
+
+void PlaylistWidget::slotRefreshPlaylist()
+{
+    QStringList playlistItems = _playlistModel.stringList();
+    for(auto filePath : playlistItems){
+        playlist.addMedia(QUrl::fromLocalFile(filePath));
+    }
+    qDebug() << "Songs in playlist: " << playlist.mediaCount();
 }
 

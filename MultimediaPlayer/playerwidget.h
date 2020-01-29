@@ -22,7 +22,8 @@ public:
     PlayerWidget(QWidget *parent = nullptr);
     ~PlayerWidget() override;
 
-
+    inline void setPlaylist(QMediaPlaylist& playlist)
+                    {mediaPlayer.setPlaylist(&playlist);}
 protected:
     void mouseMoveEvent(QMouseEvent* event) override;
     void mousePressEvent(QMouseEvent* event) override;
@@ -68,7 +69,7 @@ private:
 signals:
     void signalNextFilePlay();
 public slots:
-    void slotPlayMedia(const QModelIndex& item);
+    void slotPlay();
     void slotSetMediaPosition(qint64);
     void slotSetSliderPosition(qint64);
     void slotSetVolume(qint64);

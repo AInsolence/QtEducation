@@ -17,7 +17,7 @@ public:
 private:
     QVector<QWidget*> components;
     PlayerWidget* playerWidget = nullptr;
-    QListView* playlistWidget = nullptr;
+    PlaylistWidget* playlistWidget = nullptr;
     QWidget* videoCanvas = nullptr;
 signals:
     void signalThat();
