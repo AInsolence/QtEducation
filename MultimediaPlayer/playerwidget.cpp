@@ -25,7 +25,7 @@ PlayerWidget::PlayerWidget(QWidget *parent)
 
     // main window controls
 
-    setWindowTitle("Media Player v0.2");
+    setWindowTitle("Media Player v0.3");
     // info items init
     durationSlider = new QSlider(Qt::Horizontal, this);
     durationTime = new QToolButton(this);
