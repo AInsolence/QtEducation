@@ -1,77 +1,61 @@
+/* Color palette reference: https://color.romanuke.com/tsvetovaya-palitra-4112/ */
+
 * {
-    background: qlineargradient( x1:0, y1:1, x2:0, y2:0,
-                                 stop: 1 rgb(8, 50, 59));
-    color: rgba(255, 255, 255, 150);
+   background-color: #eff0f2;
+   font: bold;
+   font-size: 14px;
+   color: #333333;
   }
 
-QWidget#titleBar{
-    max-height: 30px;
-}
-
-QLabel#playerTitle {
-    border: 3px solid rgba(142, 142, 245, 30);
-    margin: 0px;
-}
-
 QToolButton{
-    border: 3px solid rgba(142, 142, 245, 40);
+    background-color: #bfc0bd;
+    margin: 5px;
+    width: 55px;
 }
 
 QToolButton:hover {
-                        color: yellow;
-                     }
+    background-color: #7d977d;
+}
 
 QToolButton#durationTime{
-    border: none;
+    /*border: none;*/
 }
 
 QPushButton {
-                min-width: 100px;
-                min-height: 30px;
-
-                background: qlineargradient( x1:0, y1:1, x2:0, y2:0,
-                                             stop: 1   rgb(10, 133, 135),
-                                             stop: 0.4 rgb(31, 31, 33));
-
-                border: 1px solid rgba(142, 142, 245, 30);
-                border-radius: 5px;
-            }
+    background-color: #bfc0bd;
+    height: 28px;
+    width: 50px;
+    margin: 5px;
+}
 
 QPushButton:hover {
-                        color: yellow;
-                     }
+     background-color: #7d977d;
+}
 
 QPushButton:pressed {
-                         color: red;
-                         border: 1px solid rgba(142, 142, 245, 30);
-                      }
+    /*color: #2d433c;*/
+}
 
 QPushButton:disabled {
-                                background: qlineargradient( x1:0, y1:1, x2:0, y2:0,
-                                                             stop: 1   rgb(131, 110, 33),
-                                                             stop: 0.4 rgb(133, 110, 135),
-                                                             stop: 0.2 rgb(110, 150, 150));
-                              }
+    background-color: #eff0f2;
+}
 
 QSlider::groove:horizontal {
-    border: 1px solid rgba(142, 142, 245, 30);
-    height: 8px;
-    background: qlineargradient( x1:0, y1:1, x2:0, y2:0,
-                                 stop: 1   rgb(10, 100, 110),
-                                 stop: 0.4 rgb(31, 31, 33));
-    margin: 2px 0;
+    background-color: #bfc0bd;
+    height: 5px;
 }
 
 QSlider::handle:horizontal {
-    background: qlineargradient( x1:0, y1:1, x2:0, y2:0,
-                                 stop: 1   rgb(31, 180, 33),
-                                 stop: 0.4 rgb(180, 180, 80));
-    border: 1px solid #5c5c5c;
-    width: 18px;
-    margin: -2px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */
+    background-color: #7d977d;
+    width: 25px;
+    margin: -3px, -3px, 0, 0;
     border-radius: 3px;
 }
 
 QSlider::handle:horizontal:hover {
-    background: yellow;
+    background-color: #2d433c;
+}
+
+QPushButton#stopButton {
+
 }

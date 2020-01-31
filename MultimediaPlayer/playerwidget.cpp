@@ -9,10 +9,8 @@
 #include "playbutton.h"
 #include "stopbutton.h"
 #include "pausebutton.h"
-#include "openfilebutton.h"
-#include "shutdownbutton.h"
-#include "minimizebutton.h"
-#include "maximizebutton.h"
+#include "prevbutton.h"
+#include "nextbutton.h"
 #include <QModelIndex>
 
 PlayerWidget::PlayerWidget(QWidget *parent)
@@ -28,13 +26,6 @@ PlayerWidget::PlayerWidget(QWidget *parent)
     // main window controls
 
     setWindowTitle("Media Player v0.2");
-    playerWindowTitle.setParent(this);
-    playerWindowTitle.setObjectName("playerTitle");
-    playerWindowTitle.setText(this->windowTitle());
-
-    shutDownButton = new ShutDownButton("X", this);
-    maximizedButton = new MaximizeButton("| |", mediaPlayer, this);
-    ICommonCommand* minimizeButton = new MinimizeButton("_", this);
     // info items init
     durationSlider = new QSlider(Qt::Horizontal, this);
     durationTime = new QToolButton(this);
@@ -42,10 +33,13 @@ PlayerWidget::PlayerWidget(QWidget *parent)
     durationTime->setMinimumWidth(100);
     durationTime->setObjectName("durationTime");
     fileNameLabel = new QLabel("", this);
-    // player controls init
-    playButton = new PlayButton("&Play", this->mediaPlayer, this);
-    pauseButton = new PauseButton(" || ", this->mediaPlayer, this);
-    stopButton = new StopButton("&stop", this->mediaPlayer, this);
+    // player controls init TODO check optimal constructor
+    playButton = new PlayButton("|>", this);
+    pauseButton = new PauseButton(" || ", this);
+    stopButton = new StopButton(QString::fromWCharArray(L"\u23F9"), this);
+    prevButton = new PrevButton("<<", this);
+    nextButton = new NextButton(">>", this);
+
     openFileButton = new OpenFileButton(" ^ ", this->mediaPlayer, *fileNameLabel, this);
 
     fullScreenButton = new QToolButton(this);
@@ -59,27 +53,23 @@ PlayerWidget::PlayerWidget(QWidget *parent)
     QGridLayout* mainLayout = new QGridLayout(this);
     mainLayout->setSpacing(0);
     mainLayout->setMargin(0);
-    // title
-    //TODO set in mediaplayer
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowSystemMenuHint);
-    mainLayout->addWidget(&playerWindowTitle, 0, 0, 1, 9);
-    mainLayout->addWidget(minimizeButton, 0, 9, 1, 1);
-    mainLayout->addWidget(maximizedButton, 0, 10, 1, 1);
-    mainLayout->addWidget(shutDownButton, 0, 11, 1, 1);
 
-    mainLayout->addWidget(&videoScreen, 2, 0, 1, 12);
+    mainLayout->addWidget(&videoScreen, 2, 0, 1, 11);
 
     mainLayout->addWidget(fileNameLabel, 3, 1, 1, 6);
     mainLayout->addWidget(durationTime, 3, 9, 1, 3);
 
     mainLayout->addWidget(durationSlider, 4, 1, 1, 8);
-    mainLayout->addWidget(openFileButton, 4, 11, 1, 1);
+    mainLayout->addWidget(openFileButton, 4, 10, 1, 1);
 
-    mainLayout->addWidget(playButton, 5, 1, 1, 1);
-    mainLayout->addWidget(pauseButton, 5, 2, 1, 1);
-    mainLayout->addWidget(stopButton, 5, 3, 1, 1);
+    mainLayout->addWidget(prevButton, 5, 1, 1, 1);
+    mainLayout->addWidget(playButton, 5, 2, 1, 1);
+    mainLayout->addWidget(pauseButton, 5, 3, 1, 1);
+    mainLayout->addWidget(stopButton, 5, 4, 1, 1);
+    mainLayout->addWidget(nextButton, 5, 5, 1, 1);
+
     mainLayout->addWidget(volumeSlider, 5, 6, 1, 3);
-    mainLayout->addWidget(fullScreenButton, 5, 11, 1, 1);
+    mainLayout->addWidget(fullScreenButton, 5, 10, 1, 1);
 
     // volume slider connect
     connect(volumeSlider, &QSlider::valueChanged, this, &PlayerWidget::slotSetVolume);
@@ -119,14 +109,13 @@ PlayerWidget::PlayerWidget(QWidget *parent)
 
 PlayerWidget::~PlayerWidget()
 {
+    // ?? parent widget controlled ?? TODO
     // controls
-    delete shutDownButton;
-    delete minimizedButton;
-    delete maximizedButton;
-    // buttons
     delete playButton;
     delete pauseButton;
     delete stopButton;
+    delete prevButton;
+    delete nextButton;
     delete openFileButton;
     delete fullScreenButton;
     // info items
@@ -137,40 +126,6 @@ PlayerWidget::~PlayerWidget()
     // layouts
     delete mainLayout;
     delete titleLayout;
-}
-
-void PlayerWidget::mouseMoveEvent(QMouseEvent *event)
-{
-        if( event->buttons().testFlag(Qt::LeftButton) && bIsMovingAvailable) {
-            this->move(event->globalPos() - dragPosition);
-          }
-}
-
-void PlayerWidget::mousePressEvent(QMouseEvent *event)
-{
-    if(playerWindowTitle.underMouse()){
-            bIsMovingAvailable = true;
-            dragPosition = event->globalPos() - frameGeometry().topLeft();
-      }
-}
-
-void PlayerWidget::mouseReleaseEvent(QMouseEvent *event)
-{
-    if(event->button() == Qt::LeftButton) {
-        bIsMovingAvailable = false;
-    }
-}
-
-void PlayerWidget::mouseDoubleClickEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event)
-
-    if(playerWindowTitle.underMouse()){
-            maximizedButton->slotExecute();
-      }
-    if(videoScreen.underMouse()){
-        slotToFullScreen();
-    }
 }
 
 void PlayerWidget::keyPressEvent(QKeyEvent *event)

@@ -18,17 +18,16 @@ class PlayerWidget : public QWidget
 {
     Q_OBJECT
 
+    friend IPlayerCommand;
+
 public:
     PlayerWidget(QWidget *parent = nullptr);
     ~PlayerWidget() override;
 
     inline void setPlaylist(QMediaPlaylist& playlist)
                     {mediaPlayer.setPlaylist(&playlist);}
+    inline OpenFileButton* getOpenFileButton(){return openFileButton;}
 protected:
-    void mouseMoveEvent(QMouseEvent* event) override;
-    void mousePressEvent(QMouseEvent* event) override;
-    void mouseReleaseEvent(QMouseEvent* event) override;
-    void mouseDoubleClickEvent(QMouseEvent *event) override;
     void keyPressEvent(QKeyEvent* event) override;
     void closeEvent(QCloseEvent* event) override;
 
@@ -42,13 +41,11 @@ private:
     // screen
     QVideoWidget videoScreen;
     // player controls
-    ICommonCommand* shutDownButton = nullptr;
-    ICommonCommand* minimizedButton = nullptr;
-    ICommonCommand* maximizedButton = nullptr;
-
     IPlayerCommand* playButton = nullptr;
     IPlayerCommand* pauseButton = nullptr;
     IPlayerCommand* stopButton = nullptr;
+    IPlayerCommand* prevButton = nullptr;
+    IPlayerCommand* nextButton = nullptr;
     OpenFileButton* openFileButton = nullptr;
     QToolButton* fullScreenButton = nullptr;
 

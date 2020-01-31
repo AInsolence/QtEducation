@@ -20,32 +20,30 @@ SOURCES += \
     iplayercommand.cpp \
     listviewitemdelegate.cpp \
     main.cpp \
-    maximizebutton.cpp \
     mediaplayer.cpp \
-    minimizebutton.cpp \
     myapplication.cpp \
+    nextbutton.cpp \
     openfilebutton.cpp \
     pausebutton.cpp \
     playbutton.cpp \
     playerwidget.cpp \
     playlistwidget.cpp \
-    shutdownbutton.cpp \
+    prevbutton.cpp \
     stopbutton.cpp
 
 HEADERS += \
     icommoncommand.h \
     iplayercommand.h \
     listviewitemdelegate.h \
-    maximizebutton.h \
     mediaplayer.h \
-    minimizebutton.h \
     myapplication.h \
+    nextbutton.h \
     openfilebutton.h \
     pausebutton.h \
     playbutton.h \
     playerwidget.h \
     playlistwidget.h \
-    shutdownbutton.h \
+    prevbutton.h \
     stopbutton.h
 
 # Default rules for deployment.

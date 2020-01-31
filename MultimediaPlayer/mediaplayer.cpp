@@ -1,5 +1,7 @@
 #include "mediaplayer.h"
 #include <QFile>
+#include <QStyleFactory>
+#include "myapplication.h"
 
 QStringList MediaPlayer::_supportedFormats;
 
@@ -38,6 +40,10 @@ MediaPlayer::MediaPlayer()
     // connections
     connect(playlistWidget, &PlaylistWidget::signalPlayFromPlaylist,
             playerWidget, &PlayerWidget::slotPlay);
+    connect(playerWidget->getOpenFileButton(), &OpenFileButton::signalAddFileToPlaylist,
+            playlistWidget, &PlaylistWidget::slotAddNewFile);
+    // set style
+    MyApplication::getApp()->setStyle(QStyleFactory::create("fusion"));
 }
 
 MediaPlayer::~MediaPlayer()

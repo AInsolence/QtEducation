@@ -8,7 +8,6 @@ class PauseButton : public IPlayerCommand
 {
 public:
     explicit PauseButton(const QString&& text,
-                        QMediaPlayer& mediaPlayer,
                         QWidget *parent = nullptr);
 private:
     using IPlayerCommand::_mediaPlayer;

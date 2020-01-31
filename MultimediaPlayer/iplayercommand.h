@@ -9,11 +9,10 @@ class IPlayerCommand : public QPushButton
 {
     Q_OBJECT
 public:
-    explicit IPlayerCommand(QMediaPlayer& mediaPlayer,
-                            const QString& text,
+    explicit IPlayerCommand(const QString& text,
                             QWidget *parent = nullptr);
 protected:
-    QMediaPlayer& _mediaPlayer;
+    QMediaPlayer* _mediaPlayer;
 public slots:
     virtual void slotExecute() const = 0;
 };

@@ -1,13 +1,13 @@
-#ifndef STOPBUTTON_H
-#define STOPBUTTON_H
+#ifndef PREVBUTTON_H
+#define PREVBUTTON_H
 
 #include <QObject>
 #include "iplayercommand.h"
 
-class StopButton : public IPlayerCommand
+class PrevButton : public IPlayerCommand
 {
 public:
-    explicit StopButton(const QString&& text,
+    explicit PrevButton(const QString&& text,
                         QWidget *parent = nullptr);
 private:
     using IPlayerCommand::_mediaPlayer;
@@ -15,4 +15,4 @@ public slots:
     virtual void slotExecute() const override final;
 };
 
-#endif // STOPBUTTON_H
+#endif // PLAYBUTTON_H

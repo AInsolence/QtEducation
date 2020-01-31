@@ -8,7 +8,6 @@ class PlayButton : public IPlayerCommand
 {
 public:
     explicit PlayButton(const QString&& text,
-                        QMediaPlayer& mediaPlayer,
                         QWidget *parent = nullptr);
 private:
     using IPlayerCommand::_mediaPlayer;

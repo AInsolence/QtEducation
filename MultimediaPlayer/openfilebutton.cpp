@@ -9,7 +9,6 @@ OpenFileButton::OpenFileButton(const QString&& text,
       _mediaPlayer(mediaPlayer),
       _fileNameLabel(fileNameLabel)
 {
-
 }
 
 QString OpenFileButton::getLastFileOpened() const
@@ -24,10 +23,10 @@ void OpenFileButton::setLastFileOpened(const QString& fileName)
 
 void OpenFileButton::slotExecute()
 {
-    QString fileName = QFileDialog::getOpenFileName();
+    const QString fileName = QFileDialog::getOpenFileName();
 
     if(!fileName.isEmpty()){
-        _mediaPlayer.setMedia(QUrl::fromLocalFile(fileName));
+        emit signalAddFileToPlaylist(fileName);
         // TODO change it if playlist will be
         setLastFileOpened(fileName);
         // get song name to show

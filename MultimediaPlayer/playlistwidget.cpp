@@ -7,12 +7,21 @@
 #include <QDirIterator>
 #include "mediaplayer.h"
 #include "listviewitemdelegate.h"
+#include "openfilebutton.h"
 
 PlaylistWidget::PlaylistWidget(QWidget *parent) : QListView(parent)
 {
     ListViewItemDelegate* delegate = new ListViewItemDelegate(this);
 
     setAcceptDrops(true);
+    setSelectionMode(QAbstractItemView::SingleSelection);
+    setDragEnabled(true);
+    viewport()->setAcceptDrops(true);
+    setDragDropMode(QAbstractItemView::InternalMove);
+    setDropIndicatorShown(true);
+
+    setSelectionBehavior(QAbstractItemView::SelectRows);
+
     setModel(&_playlistModel);
     setEditTriggers(NoEditTriggers);
     setItemDelegate(delegate);
@@ -74,6 +83,18 @@ void PlaylistWidget::slotSetNewMediaToPlay(const QModelIndex &index)
 {
     playlist.setCurrentIndex(index.row());
     emit signalPlayFromPlaylist();
+}
+
+void PlaylistWidget::slotAddNewFile(const QString &filePath)
+{
+    // make manipulations with opened object
+    QStringList list = _playlistModel.stringList();
+    QFileInfo info(filePath);
+    if(info.isFile()){
+        list.append(filePath);
+        _playlistModel.setStringList(list);
+        slotRefreshPlaylist();
+    }
 }
 
 void PlaylistWidget::slotRefreshPlaylist()
