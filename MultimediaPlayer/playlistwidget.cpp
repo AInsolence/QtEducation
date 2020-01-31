@@ -79,9 +79,9 @@ void PlaylistWidget::slotSetNewMediaToPlay(const QModelIndex &index)
 void PlaylistWidget::slotRefreshPlaylist()
 {
     QStringList playlistItems = _playlistModel.stringList();
+    playlist.clear();// reset playlist
     for(auto filePath : playlistItems){
         playlist.addMedia(QUrl::fromLocalFile(filePath));
     }
-    qDebug() << "Songs in playlist: " << playlist.mediaCount();
 }
 
