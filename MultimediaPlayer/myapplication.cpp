@@ -17,5 +17,5 @@ QSettings* MyApplication::settings()
 
 MyApplication *MyApplication::getApp()
 {
-    return static_cast<MyApplication*>(QCoreApplication::instance());
+    return dynamic_cast<MyApplication*>(QCoreApplication::instance());
 }

@@ -11,7 +11,7 @@
 
 PlaylistWidget::PlaylistWidget(QWidget *parent) : QListView(parent)
 {
-    ListViewItemDelegate* delegate = new ListViewItemDelegate(this);
+    auto delegate = new ListViewItemDelegate(this);
 
     setAcceptDrops(true);
     setSelectionMode(QAbstractItemView::SingleSelection);
@@ -26,7 +26,7 @@ PlaylistWidget::PlaylistWidget(QWidget *parent) : QListView(parent)
     setEditTriggers(NoEditTriggers);
     setItemDelegate(delegate);
 
-    playlist.setPlaybackMode(QMediaPlaylist::Sequential);
+    _playlist.setPlaybackMode(QMediaPlaylist::Sequential);
 
     // connections
     connect(&_playlistModel, &QStringListModel::dataChanged,
@@ -52,7 +52,7 @@ void PlaylistWidget::dropEvent(QDropEvent *eventDrop)
     auto urls = eventDrop->mimeData()->urls();
     // make manipulations with dragged object
     QStringList list = _playlistModel.stringList();
-    for (auto url : urls){
+    for (const auto& url : urls){
         QString localPath = url.toLocalFile();
         QFileInfo info(localPath);
         if(info.isDir()){
@@ -81,7 +81,7 @@ QStringList PlaylistWidget::_scanDirectory(const QString& dirPath,
 
 void PlaylistWidget::slotSetNewMediaToPlay(const QModelIndex &index)
 {
-    playlist.setCurrentIndex(index.row());
+    _playlist.setCurrentIndex(index.row());
     emit signalPlayFromPlaylist();
 }
 
@@ -100,9 +100,9 @@ void PlaylistWidget::slotAddNewFile(const QString &filePath)
 void PlaylistWidget::slotRefreshPlaylist()
 {
     QStringList playlistItems = _playlistModel.stringList();
-    playlist.clear();// reset playlist
-    for(auto filePath : playlistItems){
-        playlist.addMedia(QUrl::fromLocalFile(filePath));
+    _playlist.clear();// reset _playlist
+    for(const auto& filePath : playlistItems){
+        _playlist.addMedia(QUrl::fromLocalFile(filePath));
     }
 }
 

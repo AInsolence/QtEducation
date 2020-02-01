@@ -20,7 +20,8 @@ PlayerWidget::PlayerWidget(QWidget *parent)
     mediaPlayer.setParent(this);
     //
     videoScreen.setParent(this);
-    videoScreen.setMinimumHeight(300);
+    int videoMinimimHeight = 280;
+    videoScreen.setMinimumHeight(videoMinimimHeight);
     videoScreen.hide();
     mediaPlayer.setVideoOutput(&videoScreen);
 
@@ -49,13 +50,13 @@ PlayerWidget::PlayerWidget(QWidget *parent)
     volumeSlider = new QSlider(Qt::Horizontal, this);
     volumeSlider->setRange(0, 100);
     volumeSlider->setValue(100);
-    volumeSlider->setMinimumWidth(150);
+
     // layout
-    QGridLayout* mainLayout = new QGridLayout(this);
+    auto mainLayout = new QGridLayout(this);
     mainLayout->setSpacing(0);
     mainLayout->setMargin(0);
 
-    mainLayout->addWidget(&videoScreen, 2, 0, 1, 11);
+    mainLayout->addWidget(&videoScreen, 2, 0, 1, 12);
 
     mainLayout->addWidget(fileNameLabel, 3, 1, 1, 6);
     mainLayout->addWidget(durationTime, 3, 9, 1, 3);
@@ -94,17 +95,17 @@ PlayerWidget::PlayerWidget(QWidget *parent)
     /// SETTINGS
     slotReadSettings();
     // set previous file as a current media
-    if(!openFileButton->getLastFileOpened().isEmpty()){
-        mediaPlayer.setMedia(QUrl::fromLocalFile(openFileButton->getLastFileOpened()));
-        mediaPlayer.setPosition(lastFilePosition);
-        // get song name to show
-        QStringList nameParse = openFileButton->getLastFileOpened().split("/");
-        fileNameLabel->setText(nameParse[nameParse.length() - 1]);
+//    if(!openFileButton->getLastFileOpened().isEmpty()){
+//        mediaPlayer.setMedia(QUrl::fromLocalFile(openFileButton->getLastFileOpened()));
+//        mediaPlayer.setPosition(lastFilePosition);
+//        // get song name to show
+//        QStringList nameParse = openFileButton->getLastFileOpened().split("/");
+//        fileNameLabel->setText(nameParse[nameParse.length() - 1]);
 
-        playButton->setEnabled(true);
-        pauseButton->setEnabled(true);
-        stopButton->setEnabled(true);
-    }
+//        playButton->setEnabled(true);
+//        pauseButton->setEnabled(true);
+//        stopButton->setEnabled(true);
+//    }
     connect(MyApplication::getApp(), &QApplication::commitDataRequest,
             this, &PlayerWidget::slotWriteSettings);
     connect(MyApplication::getApp(), &QApplication::commitDataRequest,
@@ -243,7 +244,7 @@ void PlayerWidget::slotReadSettings()
     QSettings* settings = MyApplication::getApp()->settings();
     settings->beginGroup("/Settings");
 
-    openFileButton->setLastFileOpened(settings->value("/currentFile", "").toString());
+    //openFileButton->setLastFileOpened(settings->value("/currentFile", "").toString());
     lastFilePosition =
                 settings->value("/currentTime", "0").toLongLong();
     volumeSlider->setValue(
@@ -258,7 +259,7 @@ void PlayerWidget::slotWriteSettings()
     QSettings* settings = MyApplication::getApp()->settings();
     settings->beginGroup("/Settings");
 
-    settings->setValue("/currentFile", openFileButton->getLastFileOpened());
+    //settings->setValue("/currentFile", openFileButton->getLastFileOpened());
     settings->setValue("/currentTime", mediaPlayer.position());
     settings->setValue("/volume", volumeSlider->value());
     settings->setValue("/bIsDurationTime", bIsDurationTime);

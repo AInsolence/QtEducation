@@ -13,9 +13,8 @@ class PlaylistWidget : public QListView
     Q_OBJECT
 public:
     explicit PlaylistWidget(QWidget *parent = nullptr);
-    inline QMediaPlaylist& getMediaPlaylist(){return playlist;}
+    inline QMediaPlaylist& getMediaPlaylist(){return _playlist;}
 protected:
-    //virtual void mousePressEvent(QMouseEvent* eventPress) override;
     virtual void dragMoveEvent(QDragMoveEvent *eventDragMove) override;
     virtual void dragEnterEvent(QDragEnterEvent* eventDrag) override;
     virtual void dropEvent(QDropEvent* eventDrop) override;
@@ -23,8 +22,7 @@ private:
     QStringListModel _playlistModel;
     QStringList _scanDirectory(const QString& dirPath,
                                const QStringList& filters) const;
-    QMediaPlaylist playlist;
-
+    QMediaPlaylist _playlist;
 signals:
     void signalPlayFromPlaylist();
 private slots:

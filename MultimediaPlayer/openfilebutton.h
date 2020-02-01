@@ -12,14 +12,10 @@ public:
     explicit OpenFileButton(const QString&& text,
                         QMediaPlayer& mediaPlayer,
                         QWidget *parent = nullptr);
-
-    QString getLastFileOpened() const;
-    void setLastFileOpened(const QString&);
 signals:
     void signalAddFileToPlaylist(const QString& filePath);
 private:
     QMediaPlayer& _mediaPlayer;
-    QString _lastFileOpened = "";
 public slots:
     virtual void slotExecute() override final;
 };

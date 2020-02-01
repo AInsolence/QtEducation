@@ -7,15 +7,16 @@ QStringList MediaPlayer::_supportedFormats;
 
 MediaPlayer::MediaPlayer()
 {//TODO set layout for all components
-    playerWidget = new PlayerWidget();
+    playerWidget = new PlayerWidget(this);
     components.push_back(playerWidget);
 
-    playlistWidget = new PlaylistWidget();
+    playlistWidget = new PlaylistWidget(this);
     components.push_back(playlistWidget);
     // set playlist
     playerWidget->setPlaylist(playlistWidget->getMediaPlaylist());
 
-    //videoCanvas = nullptr;
+    auto layout = new QVBoxLayout(this);
+    setLayout(layout);
 
     for(auto component : components){
         // style
@@ -27,7 +28,7 @@ MediaPlayer::MediaPlayer()
         else {
             qDebug() << "Cannot open style.qss file";
         }
-        //component->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowSystemMenuHint);
+        layout->addWidget(component);
         component->show();
     }
     // settings
@@ -43,12 +44,11 @@ MediaPlayer::MediaPlayer()
     connect(playerWidget->getOpenFileButton(), &OpenFileButton::signalAddFileToPlaylist,
             playlistWidget, &PlaylistWidget::slotAddNewFile);
     // set style
-    MyApplication::getApp()->setStyle(QStyleFactory::create("fusion"));
+    MyApplication::setStyle(QStyleFactory::create("fusion"));
+
+    show();
 }
 
 MediaPlayer::~MediaPlayer()
 {
-    delete playerWidget;
-    delete playlistWidget;
-    delete videoCanvas;
 }

@@ -1,11 +1,11 @@
 #ifndef MEDIAPLAYER_H
 #define MEDIAPLAYER_H
 
-#include <QObject>
+#include <QWidget>
 #include "playerwidget.h"
 #include "playlistwidget.h"
 
-class MediaPlayer : public QObject
+class MediaPlayer : public QWidget
 {
     Q_OBJECT
 public:
@@ -18,9 +18,6 @@ private:
     QVector<QWidget*> components;
     PlayerWidget* playerWidget = nullptr;
     PlaylistWidget* playlistWidget = nullptr;
-    QWidget* videoCanvas = nullptr;
-signals:
-    void signalThat();
 };
 
 #endif // MEDIAPLAYER_H

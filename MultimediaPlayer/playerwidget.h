@@ -61,7 +61,7 @@ private:
     QString msecToTimeString(qint64);
     void setDurationTime(qint64);
     bool bIsDurationTime = true;
-    qint64 lastFilePosition;
+    qint64 lastFilePosition = 0.0;
 
 signals:
     void signalNextFilePlay();

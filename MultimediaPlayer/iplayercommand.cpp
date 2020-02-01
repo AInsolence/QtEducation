@@ -5,6 +5,6 @@ IPlayerCommand::IPlayerCommand(const QString& text,
                                QWidget *parent) :
     QPushButton(text, parent)
 {
-    _mediaPlayer = &(static_cast<PlayerWidget*>(parent)->mediaPlayer);
+    _mediaPlayer = &(dynamic_cast<PlayerWidget*>(parent)->mediaPlayer);
     connect(this, &QPushButton::clicked, this, &IPlayerCommand::slotExecute);
 }

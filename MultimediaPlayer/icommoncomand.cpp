@@ -5,7 +5,6 @@ ICommonCommand::ICommonCommand(const QString& text,
     QToolButton(parent),
     _parent(parent)
 {
-    setMinimumWidth(40);
     setText(text);
     connect(this, &QToolButton::clicked, this, &ICommonCommand::slotExecute);
 }
