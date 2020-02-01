@@ -6,7 +6,8 @@
 QStringList MediaPlayer::_supportedFormats;
 
 MediaPlayer::MediaPlayer()
-{//TODO set layout for all components
+{
+    setMinimumWidth(500);
     playerWidget = new PlayerWidget(this);
     components.push_back(playerWidget);
 
@@ -35,7 +36,7 @@ MediaPlayer::MediaPlayer()
     QFile supportedFormats(":/supportedFormats.txt");
     if(supportedFormats.open(QIODevice::ReadOnly | QIODevice::Text)){
         while(!supportedFormats.atEnd()){
-            MediaPlayer::_supportedFormats.append("*" + supportedFormats.readLine().simplified());
+            _supportedFormats.append("*" + supportedFormats.readLine().simplified());
         }
     }
     // connections
@@ -51,4 +52,6 @@ MediaPlayer::MediaPlayer()
 
 MediaPlayer::~MediaPlayer()
 {
+    delete playerWidget;
+    delete playlistWidget;
 }

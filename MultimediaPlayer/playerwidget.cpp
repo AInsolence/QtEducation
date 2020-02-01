@@ -118,21 +118,21 @@ PlayerWidget::~PlayerWidget()
 {
     // ?? parent widget controlled ?? TODO
     // controls
-    delete playButton;
-    delete pauseButton;
-    delete stopButton;
-    delete prevButton;
-    delete nextButton;
-    delete openFileButton;
-    delete fullScreenButton;
-    // info items
-    delete volumeSlider;
-    delete durationSlider;
-    delete durationTime;
-    delete fileNameLabel;
-    // layouts
-    delete mainLayout;
-    delete titleLayout;
+//    delete playButton;
+//    delete pauseButton;
+//    delete stopButton;
+//    delete prevButton;
+//    delete nextButton;
+//    delete openFileButton;
+//    delete fullScreenButton;
+//    // info items
+//    delete volumeSlider;
+//    delete durationSlider;
+//    delete durationTime;
+//    delete fileNameLabel;
+//    // layouts
+//    delete mainLayout;
+//    delete titleLayout;
 }
 
 void PlayerWidget::keyPressEvent(QKeyEvent *event)

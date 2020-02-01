@@ -49,14 +49,13 @@ void PlaylistWidget::dragEnterEvent(QDragEnterEvent *eventDrag)
 void PlaylistWidget::dropEvent(QDropEvent *eventDrop)
 {
     // get text (or other object) from mimeData object
-    auto urls = eventDrop->mimeData()->urls();
+    const auto& urls = eventDrop->mimeData()->urls();
     // make manipulations with dragged object
     QStringList list = _playlistModel.stringList();
     for (const auto& url : urls){
-        QString localPath = url.toLocalFile();
+        const QString& localPath = url.toLocalFile();
         QFileInfo info(localPath);
         if(info.isDir()){
-            //qDebug() << "Directory: " << localPath;
             list.append(_scanDirectory(localPath, MediaPlayer::_supportedFormats));
         }
         else{
