@@ -12,6 +12,7 @@
 #include "prevbutton.h"
 #include "nextbutton.h"
 #include <QModelIndex>
+#include <QFileInfo>
 
 PlayerWidget::PlayerWidget(QWidget *parent)
     : QWidget(parent)
@@ -40,7 +41,7 @@ PlayerWidget::PlayerWidget(QWidget *parent)
     prevButton = new PrevButton("<<", this);
     nextButton = new NextButton(">>", this);
 
-    openFileButton = new OpenFileButton(" ^ ", this->mediaPlayer, *fileNameLabel, this);
+    openFileButton = new OpenFileButton(" ^ ", this->mediaPlayer, this);
 
     fullScreenButton = new QToolButton(this);
     fullScreenButton->setText("<->");
@@ -71,6 +72,11 @@ PlayerWidget::PlayerWidget(QWidget *parent)
     mainLayout->addWidget(volumeSlider, 5, 6, 1, 3);
     mainLayout->addWidget(fullScreenButton, 5, 10, 1, 1);
 
+    // track info in label connection
+    connect(&mediaPlayer, &QMediaPlayer::currentMediaChanged, this, [=](const QMediaContent& track){
+        auto trackName = QFileInfo(track.canonicalUrl().toString()).fileName();
+        fileNameLabel->setText(trackName);
+    });
     // volume slider connect
     connect(volumeSlider, &QSlider::valueChanged, this, &PlayerWidget::slotSetVolume);
     // duration slider connections

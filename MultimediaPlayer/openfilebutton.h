@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include "icommoncommand.h"
-#include <QLabel>
 #include <QMediaPlayer>
 
 class OpenFileButton : public ICommonCommand
@@ -12,7 +11,6 @@ class OpenFileButton : public ICommonCommand
 public:
     explicit OpenFileButton(const QString&& text,
                         QMediaPlayer& mediaPlayer,
-                        QLabel& fileNameLabel,
                         QWidget *parent = nullptr);
 
     QString getLastFileOpened() const;
@@ -22,8 +20,6 @@ signals:
 private:
     QMediaPlayer& _mediaPlayer;
     QString _lastFileOpened = "";
-    QLabel& _fileNameLabel;
-
 public slots:
     virtual void slotExecute() override final;
 };

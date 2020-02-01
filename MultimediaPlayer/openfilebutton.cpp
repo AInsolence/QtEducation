@@ -3,11 +3,9 @@
 
 OpenFileButton::OpenFileButton(const QString&& text,
                        QMediaPlayer& mediaPlayer,
-                       QLabel& fileNameLabel,
                        QWidget *parent)
     : ICommonCommand(text, parent),
-      _mediaPlayer(mediaPlayer),
-      _fileNameLabel(fileNameLabel)
+      _mediaPlayer(mediaPlayer)
 {
 }
 
@@ -29,8 +27,5 @@ void OpenFileButton::slotExecute()
         emit signalAddFileToPlaylist(fileName);
         // TODO change it if playlist will be
         setLastFileOpened(fileName);
-        // get song name to show
-        QStringList nameParse = fileName.split("/");
-        _fileNameLabel.setText(nameParse[nameParse.length() - 1]);
     }
 }

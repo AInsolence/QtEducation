@@ -6,6 +6,7 @@
 #include <QSettings>
 #include <QVideoWidget>
 #include <QGridLayout>
+#include <QLabel>
 #include "iplayercommand.h"
 #include "icommoncommand.h"
 #include "openfilebutton.h"
