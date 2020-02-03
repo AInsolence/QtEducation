@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QToolButton>
 
+#include <QMediaPlayer>
+
 class ICommonCommand : public QToolButton
 {
     Q_OBJECT
@@ -11,7 +13,7 @@ public:
     explicit ICommonCommand(const QString& text,
                             QWidget *parent = nullptr);
 protected:
-    QWidget* _parent = nullptr;
+    QMediaPlayer* _mediaPlayer;
 public slots:
     virtual void slotExecute() = 0;
 };

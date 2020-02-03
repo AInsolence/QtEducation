@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    fullscreenbutton.cpp \
     icommoncomand.cpp \
     iplayercommand.cpp \
     listviewitemdelegate.cpp \
@@ -29,9 +30,11 @@ SOURCES += \
     playerwidget.cpp \
     playlistwidget.cpp \
     prevbutton.cpp \
-    stopbutton.cpp
+    stopbutton.cpp \
+    videowidget.cpp
 
 HEADERS += \
+    fullscreenbutton.h \
     icommoncommand.h \
     iplayercommand.h \
     listviewitemdelegate.h \
@@ -44,7 +47,8 @@ HEADERS += \
     playerwidget.h \
     playlistwidget.h \
     prevbutton.h \
-    stopbutton.h
+    stopbutton.h \
+    videowidget.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

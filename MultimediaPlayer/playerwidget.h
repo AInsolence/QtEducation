@@ -4,12 +4,12 @@
 #include <QWidget>
 #include <QtMultimedia/QMediaPlayer>
 #include <QSettings>
-#include <QVideoWidget>
 #include <QGridLayout>
 #include <QLabel>
 #include "iplayercommand.h"
 #include "icommoncommand.h"
 #include "openfilebutton.h"
+#include "fullscreenbutton.h"
 
 class QToolButton;
 class QLabel;
@@ -20,6 +20,7 @@ class PlayerWidget : public QWidget
     Q_OBJECT
 
     friend IPlayerCommand;
+    friend ICommonCommand;
 
 public:
     PlayerWidget(QWidget *parent = nullptr);
@@ -28,8 +29,9 @@ public:
     inline void setPlaylist(QMediaPlaylist& playlist)
                     {mediaPlayer.setPlaylist(&playlist);}
     inline OpenFileButton* getOpenFileButton(){return openFileButton;}
+    inline QMediaPlayer& getMediaPlayer(){return mediaPlayer;}
+    inline FullScreenButton* getFullScreenButton(){return  fullScreenButton;}
 protected:
-    void keyPressEvent(QKeyEvent* event) override;
     void closeEvent(QCloseEvent* event) override;
 
 private:
@@ -39,8 +41,6 @@ private:
     QGridLayout* mainLayout = nullptr;
     // top line
     QLabel playerWindowTitle;
-    // screen
-    QVideoWidget videoScreen;
     // player controls
     IPlayerCommand* playButton = nullptr;
     IPlayerCommand* pauseButton = nullptr;
@@ -48,7 +48,7 @@ private:
     IPlayerCommand* prevButton = nullptr;
     IPlayerCommand* nextButton = nullptr;
     OpenFileButton* openFileButton = nullptr;
-    QToolButton* fullScreenButton = nullptr;
+    FullScreenButton* fullScreenButton = nullptr;
 
     // info items
     QSlider* volumeSlider = nullptr;
@@ -72,8 +72,6 @@ public slots:
     void slotSetVolume(qint64);
     void slotSetDuration(qint64);
     void slotChangeDurationInfo();
-    void slotIsVideoAvailable();
-    void slotToFullScreen();
     void slotReadSettings();
     void slotWriteSettings();
 };

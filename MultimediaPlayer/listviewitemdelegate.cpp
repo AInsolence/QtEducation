@@ -13,7 +13,7 @@ QString ListViewItemDelegate::displayText(const QVariant &value,
 {
     Q_UNUSED(locale)
 
-    // get file name from path to show
+    // get file name from path
     auto fileName = QFileInfo(value.toString()).fileName();
     // delete file extention
     QRegExp exp("\\.[^.]*$");

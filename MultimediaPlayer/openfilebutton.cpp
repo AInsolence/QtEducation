@@ -2,10 +2,8 @@
 #include <QFileDialog>
 
 OpenFileButton::OpenFileButton(const QString&& text,
-                       QMediaPlayer& mediaPlayer,
                        QWidget *parent)
-    : ICommonCommand(text, parent),
-      _mediaPlayer(mediaPlayer)
+    : ICommonCommand(text, parent)
 {
 }
 

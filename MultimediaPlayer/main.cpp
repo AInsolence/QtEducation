@@ -2,6 +2,7 @@
 #include "playerwidget.h"
 
 #include "myapplication.h"
+#include "videowidget.h"
 
 int main(int argc, char *argv[])
 {

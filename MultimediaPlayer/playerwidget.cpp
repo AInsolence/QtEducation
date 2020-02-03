@@ -2,7 +2,6 @@
 #include <QSlider>
 #include <QLabel>
 #include <QTime>
-#include <QVideoWidget>
 #include <QMouseEvent>
 #include <QSessionManager>
 #include "myapplication.h"
@@ -18,13 +17,6 @@ PlayerWidget::PlayerWidget(QWidget *parent)
     : QWidget(parent)
 {
     mediaPlayer.setParent(this);
-    //
-    videoScreen.setParent(this);
-    int videoMinimimHeight = 280;
-    videoScreen.setMinimumHeight(videoMinimimHeight);
-    videoScreen.hide();
-    mediaPlayer.setVideoOutput(&videoScreen);
-
     // main window controls
 
     setWindowTitle("Media Player v0.3");
@@ -42,9 +34,9 @@ PlayerWidget::PlayerWidget(QWidget *parent)
     prevButton = new PrevButton("<<", this);
     nextButton = new NextButton(">>", this);
 
-    openFileButton = new OpenFileButton(" ^ ", this->mediaPlayer, this);
+    openFileButton = new OpenFileButton(" ^ ", this);
 
-    fullScreenButton = new QToolButton(this);
+    fullScreenButton = new FullScreenButton("<->", this);
     fullScreenButton->setText("<->");
 
     volumeSlider = new QSlider(Qt::Horizontal, this);
@@ -56,22 +48,20 @@ PlayerWidget::PlayerWidget(QWidget *parent)
     mainLayout->setSpacing(0);
     mainLayout->setMargin(0);
 
-    mainLayout->addWidget(&videoScreen, 2, 0, 1, 12);
+    mainLayout->addWidget(fileNameLabel, 0, 0, 1, 6);
+    mainLayout->addWidget(durationTime, 0, 9, 1, 3);
 
-    mainLayout->addWidget(fileNameLabel, 3, 1, 1, 6);
-    mainLayout->addWidget(durationTime, 3, 9, 1, 3);
+    mainLayout->addWidget(durationSlider, 1, 0, 1, 8);
+    mainLayout->addWidget(openFileButton, 1, 10, 1, 1);
 
-    mainLayout->addWidget(durationSlider, 4, 1, 1, 8);
-    mainLayout->addWidget(openFileButton, 4, 10, 1, 1);
+    mainLayout->addWidget(prevButton, 2, 0, 1, 1);
+    mainLayout->addWidget(playButton, 2, 1, 1, 1);
+    mainLayout->addWidget(pauseButton, 2, 2, 1, 1);
+    mainLayout->addWidget(stopButton, 2, 3, 1, 1);
+    mainLayout->addWidget(nextButton, 2, 4, 1, 1);
 
-    mainLayout->addWidget(prevButton, 5, 1, 1, 1);
-    mainLayout->addWidget(playButton, 5, 2, 1, 1);
-    mainLayout->addWidget(pauseButton, 5, 3, 1, 1);
-    mainLayout->addWidget(stopButton, 5, 4, 1, 1);
-    mainLayout->addWidget(nextButton, 5, 5, 1, 1);
-
-    mainLayout->addWidget(volumeSlider, 5, 6, 1, 3);
-    mainLayout->addWidget(fullScreenButton, 5, 10, 1, 1);
+    mainLayout->addWidget(volumeSlider, 2, 6, 1, 3);
+    mainLayout->addWidget(fullScreenButton, 2, 10, 1, 1);
 
     // track info in label connection
     connect(&mediaPlayer, &QMediaPlayer::currentMediaChanged, this, [=](const QMediaContent& track){
@@ -85,11 +75,6 @@ PlayerWidget::PlayerWidget(QWidget *parent)
     connect(&mediaPlayer, &QMediaPlayer::positionChanged, this, &PlayerWidget::slotSetSliderPosition);
     connect(durationSlider, &QSlider::sliderMoved, this, &PlayerWidget::slotSetMediaPosition);
     connect(durationTime, &QPushButton::clicked, this, &PlayerWidget::slotChangeDurationInfo);
-    // video connections
-    connect(&mediaPlayer, &QMediaPlayer::durationChanged, this, &PlayerWidget::slotIsVideoAvailable);
-    connect(fullScreenButton, &QToolButton::clicked, this, &PlayerWidget::slotToFullScreen);
-
-    ensurePolished();
 
     setLayout(mainLayout);
     /// SETTINGS
@@ -98,7 +83,7 @@ PlayerWidget::PlayerWidget(QWidget *parent)
 //    if(!openFileButton->getLastFileOpened().isEmpty()){
 //        mediaPlayer.setMedia(QUrl::fromLocalFile(openFileButton->getLastFileOpened()));
 //        mediaPlayer.setPosition(lastFilePosition);
-//        // get song name to show
+//        // get track name
 //        QStringList nameParse = openFileButton->getLastFileOpened().split("/");
 //        fileNameLabel->setText(nameParse[nameParse.length() - 1]);
 
@@ -133,21 +118,6 @@ PlayerWidget::~PlayerWidget()
 //    // layouts
 //    delete mainLayout;
 //    delete titleLayout;
-}
-
-void PlayerWidget::keyPressEvent(QKeyEvent *event)
-{
-    switch (event->key()) {
-        case Qt::Key_Escape:
-            if (videoScreen.isFullScreen()){
-                    videoScreen.showNormal();
-                    videoScreen.setFullScreen(false);
-                    qDebug() << "Escape pressed";
-            }
-            break;
-        default:
-            break;
-    }
 }
 
 void PlayerWidget::closeEvent(QCloseEvent *event)
@@ -212,30 +182,6 @@ void PlayerWidget::slotChangeDurationInfo()
     }
     else{
         bIsDurationTime = true;
-    }
-}
-
-void PlayerWidget::slotIsVideoAvailable()
-{
-    if(mediaPlayer.isVideoAvailable()){
-        videoScreen.show();
-    }
-    else {
-        videoScreen.hide();
-        this->resize(300, 150);
-    }
-}
-
-void PlayerWidget::slotToFullScreen()
-{
-    if(mediaPlayer.isVideoAvailable()){
-        if (!videoScreen.isFullScreen()){
-            videoScreen.setFullScreen(true);
-        }
-        else{
-            videoScreen.showNormal();
-            videoScreen.setFullScreen(false);
-        }
     }
 }
 

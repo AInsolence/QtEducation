@@ -1,22 +1,22 @@
-#ifndef OPENFILEBUTTON_H
-#define OPENFILEBUTTON_H
+#ifndef FULLSCREENBUTTON_H
+#define FULLSCREENBUTTON_H
 
 #include <QObject>
 #include "icommoncommand.h"
 #include <QMediaPlayer>
 
-class OpenFileButton : public ICommonCommand
+class FullScreenButton : public ICommonCommand
 {
     Q_OBJECT
 public:
-    explicit OpenFileButton(const QString&& text,
+    explicit FullScreenButton(const QString&& text,
                         QWidget *parent = nullptr);
 signals:
-    void signalAddFileToPlaylist(const QString& filePath);
+    void signalSetFullScreen();
 private:
     using ICommonCommand::_mediaPlayer;
 public slots:
     virtual void slotExecute() override final;
 };
 
-#endif // OPENFILEBUTTON_H
+#endif // FULLSCREENBUTTON_H
