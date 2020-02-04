@@ -4,6 +4,7 @@
 #include <QKeyEvent>
 #include "myapplication.h"
 #include <QVideoWidget>
+#include <QSplitter>
 #include "fullscreenbutton.h"
 
 QStringList MediaPlayer::_supportedFormats;
@@ -27,6 +28,8 @@ MediaPlayer::MediaPlayer()
     // layout
     auto layout = new QVBoxLayout(this);
     setLayout(layout);
+    auto splitter = new QSplitter(Qt::Vertical);
+    layout->addWidget(splitter);
 
     for(auto component : components){
         // set style
@@ -38,7 +41,7 @@ MediaPlayer::MediaPlayer()
         else {
             qDebug() << "Cannot open style.qss file";
         }
-        layout->addWidget(component);// set layout
+        splitter->addWidget(component);// set layout
     }
     // settings
     QFile supportedFormats(":/supportedFormats.txt");

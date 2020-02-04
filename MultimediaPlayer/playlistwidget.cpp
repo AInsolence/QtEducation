@@ -12,7 +12,7 @@
 PlaylistWidget::PlaylistWidget(QWidget *parent) : QListView(parent)
 {
     auto delegate = new ListViewItemDelegate(this);
-    setMinimumHeight(300);
+    setMinimumHeight(200);
 
     setAcceptDrops(true);
     setSelectionMode(QAbstractItemView::SingleSelection);
