@@ -14,6 +14,7 @@
 class QToolButton;
 class QLabel;
 class QSlider;
+class QDial;
 
 class PlayerWidget : public QWidget
 {
@@ -51,7 +52,7 @@ private:
     FullScreenButton* fullScreenButton = nullptr;
 
     // info items
-    QSlider* volumeSlider = nullptr;
+    QDial* volumeSlider = nullptr;
     QSlider* durationSlider = nullptr;
     QToolButton* durationTime = nullptr;
     QLabel* fileNameLabel = nullptr;

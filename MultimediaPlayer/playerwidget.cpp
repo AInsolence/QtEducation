@@ -1,5 +1,6 @@
 #include "playerwidget.h"
 #include <QSlider>
+#include <QDial>
 #include <QLabel>
 #include <QTime>
 #include <QMouseEvent>
@@ -39,9 +40,12 @@ PlayerWidget::PlayerWidget(QWidget *parent)
     fullScreenButton = new FullScreenButton("<->", this);
     fullScreenButton->setText("<->");
 
-    volumeSlider = new QSlider(Qt::Horizontal, this);
+    volumeSlider = new QDial(this);
     volumeSlider->setRange(0, 100);
     volumeSlider->setValue(100);
+    volumeSlider->setNotchesVisible(true);
+    volumeSlider->setWrapping(false);
+    volumeSlider->setMinimumSize(100, 100);
 
     // layout
     auto mainLayout = new QGridLayout(this);
@@ -69,7 +73,7 @@ PlayerWidget::PlayerWidget(QWidget *parent)
         fileNameLabel->setText(trackName);
     });
     // volume slider connect
-    connect(volumeSlider, &QSlider::valueChanged, this, &PlayerWidget::slotSetVolume);
+    connect(volumeSlider, &QDial::valueChanged, this, &PlayerWidget::slotSetVolume);
     // duration slider connections
     connect(&mediaPlayer, &QMediaPlayer::durationChanged, this, &PlayerWidget::slotSetDuration);
     connect(&mediaPlayer, &QMediaPlayer::positionChanged, this, &PlayerWidget::slotSetSliderPosition);
