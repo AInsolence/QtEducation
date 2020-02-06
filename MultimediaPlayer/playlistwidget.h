@@ -14,6 +14,7 @@ class PlaylistWidget : public QListView
 public:
     explicit PlaylistWidget(QWidget *parent = nullptr);
     inline QMediaPlaylist& getMediaPlaylist(){return _playlist;}
+    static QModelIndex* _currentIndex;
 protected:
     virtual void dragMoveEvent(QDragMoveEvent *eventDragMove) override;
     virtual void dragEnterEvent(QDragEnterEvent* eventDrag) override;

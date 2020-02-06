@@ -17,6 +17,7 @@
 PlayerWidget::PlayerWidget(QWidget *parent)
     : QWidget(parent)
 {
+    setFixedHeight(160);
     mediaPlayer.setParent(this);
     // main window controls
 

@@ -10,19 +10,21 @@
 #include "listviewitemdelegate.h"
 #include "openfilebutton.h"
 
+QModelIndex* PlaylistWidget::_currentIndex = nullptr;
+
 PlaylistWidget::PlaylistWidget(QWidget *parent) : QListView(parent)
 {
     auto delegate = new ListViewItemDelegate(this);
     setMinimumHeight(200);
 
     setAcceptDrops(true);
-    setSelectionMode(QAbstractItemView::SingleSelection);
-    setDragEnabled(true);
-    viewport()->setAcceptDrops(true);
-    setDragDropMode(QAbstractItemView::InternalMove);
-    setDropIndicatorShown(true);
+    setSelectionMode(QAbstractItemView::NoSelection);
+//    setDragEnabled(true);
+//    viewport()->setAcceptDrops(true);
+//    setDragDropMode(QAbstractItemView::InternalMove);
+//    setDropIndicatorShown(true);
 
-    setSelectionBehavior(QAbstractItemView::SelectRows);
+//    setSelectionBehavior(QAbstractItemView::SelectRows);
 
     setModel(&_playlistModel);
     setEditTriggers(NoEditTriggers);
@@ -82,6 +84,7 @@ QStringList PlaylistWidget::_scanDirectory(const QString& dirPath,
 
 void PlaylistWidget::slotSetNewMediaToPlay(const QModelIndex &index)
 {
+    _currentIndex = &const_cast<QModelIndex&>(index);
     _playlist.setCurrentIndex(index.row());
     emit signalPlayFromPlaylist();
 }
