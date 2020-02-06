@@ -5,7 +5,9 @@
 #include "myapplication.h"
 #include <QVideoWidget>
 #include <QSplitter>
+#include <QMenuBar>
 #include "fullscreenbutton.h"
+#include "openfilebutton.h"
 
 QStringList MediaPlayer::_supportedFormats;
 
@@ -25,6 +27,17 @@ MediaPlayer::MediaPlayer()
     components.push_back(playlistWidget);
     playerWidget->setPlaylist(playlistWidget->getMediaPlaylist());
     playerWidget->getMediaPlayer().setVideoOutput(videoScreen);
+    // menuBar
+    auto menuBar = new QMenuBar(this);
+    menuBar->setFixedHeight(24);
+    auto playlistMenu = new QMenu("+", this);
+    auto openFile = new QAction("Add file ...");
+    auto openFolder = new QAction("Add folder ...");
+    playlistMenu->addAction(openFile);
+    playlistMenu->addAction(openFolder);
+
+    menuBar->addMenu(playlistMenu);
+    components.push_back(menuBar);
     // layout
     auto layout = new QVBoxLayout(this);
     setLayout(layout);
@@ -54,7 +67,12 @@ MediaPlayer::MediaPlayer()
     connect(playlistWidget, &PlaylistWidget::signalPlayFromPlaylist,
             playerWidget, &PlayerWidget::slotPlay);
     connect(playerWidget->getOpenFileButton(), &OpenFileButton::signalAddFileToPlaylist,
-            playlistWidget, &PlaylistWidget::slotAddNewFile);
+            playlistWidget, &PlaylistWidget::slotAddNewTracks);
+    // playlist menu connections
+    connect(openFile, &QAction::triggered,
+            playerWidget->getOpenFileButton(), &ICommonCommand::slotExecute);
+    connect(openFolder, &QAction::triggered,
+            playerWidget->getOpenFileButton(), &OpenFileButton::slotOpenFolder);
     // video connections
     connect(&playerWidget->getMediaPlayer(), &QMediaPlayer::durationChanged,
             this, &MediaPlayer::slotIsVideoAvailable);

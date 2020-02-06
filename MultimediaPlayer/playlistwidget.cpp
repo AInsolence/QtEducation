@@ -5,6 +5,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QDirIterator>
+#include <QVBoxLayout>
 #include "mediaplayer.h"
 #include "listviewitemdelegate.h"
 #include "openfilebutton.h"
@@ -85,13 +86,18 @@ void PlaylistWidget::slotSetNewMediaToPlay(const QModelIndex &index)
     emit signalPlayFromPlaylist();
 }
 
-void PlaylistWidget::slotAddNewFile(const QString &filePath)
+void PlaylistWidget::slotAddNewTracks(const QString &filePath)
 {
     // make manipulations with opened object
     QStringList list = _playlistModel.stringList();
     QFileInfo info(filePath);
     if(info.isFile()){
         list.append(filePath);
+        _playlistModel.setStringList(list);
+        slotRefreshPlaylist();
+    }
+    else{
+        list.append(_scanDirectory(filePath, MediaPlayer::_supportedFormats));
         _playlistModel.setStringList(list);
         slotRefreshPlaylist();
     }

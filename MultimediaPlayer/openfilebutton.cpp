@@ -15,3 +15,12 @@ void OpenFileButton::slotExecute()
         emit signalAddFileToPlaylist(fileName);
     }
 }
+
+void OpenFileButton::slotOpenFolder()
+{
+    const QString dirName = QFileDialog::getExistingDirectory();
+
+    if(!dirName.isEmpty()){
+        emit signalAddFileToPlaylist(dirName);
+    }
+}

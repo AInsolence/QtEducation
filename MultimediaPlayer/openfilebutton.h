@@ -17,6 +17,7 @@ private:
     using ICommonCommand::_mediaPlayer;
 public slots:
     virtual void slotExecute() override final;
+    void slotOpenFolder();
 };
 
 #endif // OPENFILEBUTTON_H

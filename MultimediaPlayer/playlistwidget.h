@@ -29,7 +29,8 @@ private slots:
     void slotRefreshPlaylist();
     void slotSetNewMediaToPlay(const QModelIndex& index);
 public slots:
-    void slotAddNewFile(const QString& filePath);
+    void slotAddNewTracks(const QString& filePath);
+
 };
 
 #endif // PLAYLISTWIDGET_H
